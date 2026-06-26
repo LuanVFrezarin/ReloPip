@@ -1,0 +1,15 @@
+# Arquivos originais de iPhone (já convertidos para .mp4)
+css/mov/*.MOV
+css/mov/*.HEIC
+
+# Vídeos grandes (excedem limite do GitHub)
+css/mov/*.mp4
+
+# Screenshots de desenvolvimento
+captures/
+
+# Sistema
+.DS_Store
+Thumbs.db
+node_modules/
+.vercel
