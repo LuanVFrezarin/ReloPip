@@ -11,7 +11,7 @@ module.exports = async function handler(req, res) {
 
   if (!url || !token) {
     res.statusCode = 200;
-    res.end(JSON.stringify({ count: fallbackStart, mode: "fallback" }));
+    res.end(JSON.stringify({ count: null, mode: "fallback", persistent: false }));
     return;
   }
 
@@ -42,9 +42,9 @@ module.exports = async function handler(req, res) {
     }
 
     res.statusCode = 200;
-    res.end(JSON.stringify({ count: current, mode: "upstash" }));
+    res.end(JSON.stringify({ count: current, mode: "upstash", persistent: true }));
   } catch (error) {
     res.statusCode = 200;
-    res.end(JSON.stringify({ count: fallbackStart, mode: "error" }));
+    res.end(JSON.stringify({ count: null, mode: "error", persistent: false }));
   }
 };

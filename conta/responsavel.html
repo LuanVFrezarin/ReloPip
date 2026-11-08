@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Autorização do responsável | RELO</title>
+  <meta name="description" content="Autorize ou recuse o chat de voz, as mensagens e os amigos no RELO.">
+  <meta name="theme-color" content="#080910">
+  <link rel="icon" href="../css/mov/Iconedogame.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/pipoints.css">
+  <link rel="stylesheet" href="../css/legal.css">
+</head>
+<body class="pp-page">
+  <header class="nav scrolled"><div class="container nav-inner">
+    <a class="brand" href="../" aria-label="RELO"><img class="brand-logo" src="../css/mov/Iconedogame.png" alt="RELO"></a>
+    <nav class="nav-links pp-nav"><a href="../">Início</a><a href="../pipoints/">Pipoints</a><a href="../suporte.html">Suporte</a></nav>
+  </div></header>
+  <main class="lg-main"><div class="lg-wrap">
+    <h1>Autorização do responsável</h1>
+    <p class="lg-meta">Estatuto Digital da Criança e do Adolescente (Lei 15.211/2025).</p>
+    <div class="lg-card">
+      <p id="pedido">Carregando o pedido...</p>
+      <section class="lg-doc">
+        <p class="lg-lead">O que a autorização libera</p>
+        <ul class="lg-list">
+          <li>Chat de voz por proximidade durante as partidas online.</li>
+          <li>Mensagens na equipe, pedidos de amizade e convites para jogar.</li>
+        </ul>
+        <p class="lg-lead">O que o RELO faz para proteger</p>
+        <ul class="lg-list">
+          <li>Filtro de palavrões e de pedidos de contato fora do jogo (WhatsApp, Instagram, telefone).</li>
+          <li>Botões de silenciar, bloquear e denunciar em todo perfil. Denúncias envolvendo menores são analisadas em até 24 horas.</li>
+          <li>A voz não é gravada. Recusando, o jogo continua funcionando, só sem conversa com outros jogadores.</li>
+        </ul>
+        <p>Você pode voltar a este link e revogar a autorização quando quiser. Use também os controles parentais do aparelho (Tempo de Uso no iPhone, Family Link no Android) para limitar compras e tempo de jogo.</p>
+      </section>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:10px">
+        <button class="btn btn-primary" id="btnAutorizar" type="button" disabled>Autorizar</button>
+        <button class="btn" id="btnRecusar" type="button" disabled style="border:1px solid rgba(255,255,255,.3)">Recusar / revogar</button>
+      </div>
+      <p class="lg-err" id="erro" role="alert"></p>
+      <p class="lg-ok" id="feito" hidden></p>
+    </div>
+    <p class="pp-muted">Dúvidas: <a data-mail="EMAIL_DPO" href="#">[EMAIL_DPO]</a></p>
+  </div></main>
+  <footer class="lg-foot"><div class="lg-wrap">
+    <span>© RELO Games</span><a href="../legal/termos.html">Termos de Uso</a><a href="../legal/privacidade.html">Privacidade</a><a href="../conta/excluir.html">Excluir conta</a><a href="../suporte.html">Suporte</a>
+  </div></footer>
+  <script src="../js/empresa.js"></script><script src="../js/config.js"></script><script src="../js/relo-session.js"></script><script src="../js/responsavel.js"></script>
+</body>
+</html>

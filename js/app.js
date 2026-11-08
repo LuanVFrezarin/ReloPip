@@ -4,6 +4,8 @@
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
   const API = window.ReloAPI;
   const LINKS = (window.RELO_CONFIG && window.RELO_CONFIG.LINKS) || {};
+  const API_BASE = String((window.RELO_CONFIG && window.RELO_CONFIG.API_BASE) || "").replace(/\/$/, "");
+  const waitingUrl = API_BASE ? API_BASE + "/api/waiting" : "/api/waiting";
   const fmt = n => Number(n || 0).toLocaleString("pt-BR");
 
   let waitTotal = 0, goal = 5000, slotsTotal = 0, membersCount = 0;
@@ -271,12 +273,14 @@
       if (localStorage.getItem(LS_REG) === "1") { toast("Você já está na lista 🎉"); return; }
       localStorage.setItem(LS_REG, "1");
       waitTotal += 1; localStorage.setItem(LS_TOTAL, String(waitTotal));
-      set(true); bumpCounts(); confetti();
+      set(true); bumpCounts();
+      const registroRemoto = fetch(waitingUrl, { method: "POST" });
+      try { confetti(); } catch {}
       toast("Presença confirmada. Bem-vindo ao céu do RELO! 🪁");
       try {
-        const res = await fetch("/api/waiting", { method: "POST" });
+        const res = await registroRemoto;
         const d = res.ok ? await res.json() : null;
-        if (d && typeof d.count === "number") { waitTotal = Number(d.count); localStorage.setItem(LS_TOTAL, String(waitTotal)); bumpCounts(); }
+        if (d && d.persistent && typeof d.count === "number") { waitTotal = Math.max(waitTotal, Number(d.count)); localStorage.setItem(LS_TOTAL, String(waitTotal)); bumpCounts(); }
       } catch {}
     };
     $("#confirmWait")?.addEventListener("click", join);
@@ -328,10 +332,10 @@
   }
 
   function syncWaiting() {
-    fetch("/api/waiting").then(r => r.ok ? r.json() : null).then(d => {
-      if (!d || typeof d.count !== "number") return;
+    fetch(waitingUrl).then(r => r.ok ? r.json() : null).then(d => {
+      if (!d || !d.persistent || typeof d.count !== "number") return;
       // usa o número global do servidor (Upstash) como fonte da verdade
-      waitTotal = Number(d.count); localStorage.setItem(LS_TOTAL, String(waitTotal)); bumpCounts();
+      waitTotal = Math.max(waitTotal, Number(d.count)); localStorage.setItem(LS_TOTAL, String(waitTotal)); bumpCounts();
     }).catch(() => {});
   }
 

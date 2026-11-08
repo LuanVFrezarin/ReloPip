@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Excluir minha conta | RELO</title>
+  <meta name="description" content="Peça a exclusão definitiva da sua conta RELO e dos seus dados.">
+  <meta name="theme-color" content="#080910">
+  <link rel="icon" href="../css/mov/Iconedogame.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/pipoints.css">
+  <link rel="stylesheet" href="../css/legal.css">
+</head>
+<body class="pp-page">
+  <header class="nav scrolled"><div class="container nav-inner">
+    <a class="brand" href="../" aria-label="RELO"><img class="brand-logo" src="../css/mov/Iconedogame.png" alt="RELO"></a>
+    <nav class="nav-links pp-nav"><a href="../">Início</a><a href="../pipoints/">Pipoints</a><a href="../suporte.html">Suporte</a></nav>
+  </div></header>
+  <main class="lg-main"><div class="lg-wrap">
+    <h1>Excluir minha conta</h1>
+    <p class="lg-meta">Exclusão definitiva da conta RELO e dos dados pessoais ligados a ela.</p>
+    <nav class="lg-nav" aria-label="Documentos"><a href="../legal/termos.html">Termos de Uso</a><a href="../legal/privacidade.html">Política de Privacidade</a><a href="../conta/excluir.html" aria-current="page">Excluir minha conta</a><a href="../suporte.html">Suporte</a></nav>
+    <section class="lg-doc">
+      <p class="lg-lead">O que é apagado</p>
+      <ul class="lg-list">
+        <li>E-mail, login Google/Apple e vínculo com seus aparelhos.</li>
+        <li>Progresso, nível, estatísticas, passe, amigos, bloqueios e equipe (se você for dono, a equipe passa para outro membro).</li>
+        <li>Pipas, linhas, carretilhas, skins e Pipoints. Não há reembolso.</li>
+      </ul>
+      <p class="lg-lead">O que fica guardado, sem seu nome ou e-mail</p>
+      <ul class="lg-list">
+        <li>Registros de compras e do extrato de Pipoints, pelo prazo exigido pela lei fiscal (até 5 anos).</li>
+        <li>Registros de acesso (IP, data e hora) por 6 meses, como manda o Marco Civil da Internet.</li>
+      </ul>
+      <p>A exclusão é imediata e não pode ser desfeita. Depois dela, o mesmo e-mail pode criar uma conta nova, do zero.</p>
+    </section>
+
+    <div class="lg-card" id="passoLogin">
+      <h2>1. Entre na conta</h2>
+      <form id="formLogin">
+        <label>E-mail<input id="email" type="email" required autocomplete="email"></label>
+        <label>Senha<input id="senha" type="password" required autocomplete="current-password"></label>
+        <button class="btn btn-primary" type="submit">Entrar</button>
+      </form>
+      <p class="lg-err" id="erroLogin" role="alert"></p>
+      <p class="pp-muted">Criou a conta com Google, Apple ou como visitante? Exclua pelo próprio jogo em <b>Perfil → Excluir conta</b>, ou peça por e-mail para <a data-mail="EMAIL_DPO" href="#">[EMAIL_DPO]</a> informando o ID da conta (aparece no Perfil). Respondemos em até 15 dias.</p>
+    </div>
+
+    <div class="lg-card" id="passoConfirmar" hidden>
+      <h2>2. Confirme a exclusão</h2>
+      <p>Conta: <b id="nomeConta"></b></p>
+      <form id="formExcluir">
+        <label>Digite EXCLUIR para confirmar<input id="confirmacao" autocomplete="off" required></label>
+        <button class="btn btn-primary lg-danger" type="submit" id="btnExcluir" disabled>Excluir minha conta definitivamente</button>
+      </form>
+      <p class="lg-err" id="erroExcluir" role="alert"></p>
+    </div>
+
+    <div class="lg-card" id="passoFeito" hidden>
+      <h2>Conta excluída</h2>
+      <p class="lg-ok">Sua conta RELO e os dados pessoais ligados a ela foram apagados.</p>
+      <p>Se o jogo estiver instalado, ele volta para a tela inicial na próxima vez que você abrir.</p>
+    </div>
+  </div></main>
+  <footer class="lg-foot"><div class="lg-wrap">
+    <span>© RELO Games</span><a href="../legal/termos.html">Termos de Uso</a><a href="../legal/privacidade.html">Privacidade</a><a href="../conta/excluir.html">Excluir conta</a><a href="../suporte.html">Suporte</a>
+  </div></footer>
+  <script src="../js/empresa.js"></script><script src="../js/config.js"></script><script src="../js/relo-session.js"></script><script src="../js/excluir-conta.js"></script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+.lg-main{padding:110px 0 70px;background:#080910;color:#e9ecf3;min-height:100vh}
+.lg-wrap{width:min(820px,calc(100% - 32px));margin:0 auto}
+.lg-wrap h1{font:700 clamp(38px,6vw,64px)/1 Oswald,sans-serif;color:#ffd15a;margin:0 0 10px;letter-spacing:0}
+.lg-meta{color:#9ca4b5;margin:0 0 28px}
+.lg-doc p{font:500 18px/1.65 Rajdhani,sans-serif;color:#d3d8e3;margin:0 0 14px;max-width:70ch}
+.lg-doc h2{font:700 24px Oswald,sans-serif;color:#fff;margin:34px 0 10px;letter-spacing:.02em}
+.lg-doc .lg-lead{font-weight:700;color:#fff}
+.lg-nav{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 30px}
+.lg-nav a{padding:8px 14px;border:1px solid rgba(255,255,255,.16);color:#c6ccd8;text-decoration:none;font:600 16px Rajdhani,sans-serif}
+.lg-nav a[aria-current]{background:#ffd15a;color:#111;border-color:#ffd15a}
+.lg-card{border:1px solid rgba(255,209,90,.35);background:#10131c;padding:26px;margin:0 0 18px}
+.lg-card h2{margin-top:0}
+.lg-card label{display:grid;gap:6px;color:#b8bfcb;margin:0 0 12px;font:600 16px Rajdhani,sans-serif}
+.lg-card input{width:100%;border:1px solid rgba(255,255,255,.18);background:#080a10;color:#fff;padding:12px;font:600 16px Rajdhani,sans-serif}
+.lg-danger{background:#b3202c!important;border-color:#b3202c!important;color:#fff!important}
+.lg-ok{color:#52f28f;font-weight:700}
+.lg-err{color:#ff6b7a;min-height:22px}
+.lg-list{margin:0 0 16px 20px;color:#d3d8e3;font:500 18px/1.6 Rajdhani,sans-serif}
+.lg-foot{border-top:1px solid rgba(255,255,255,.1);padding:22px 0;background:#06070c;color:#8d95a6;font:500 15px Rajdhani,sans-serif}
+.lg-foot .lg-wrap{display:flex;flex-wrap:wrap;gap:8px 18px}
+.lg-foot a{color:#c6ccd8}
