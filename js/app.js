@@ -23,9 +23,6 @@
     setupNav();
     setupReveal();
     setupMagnetic();
-    await loadContent();
-    setupWaitList();
-    setupShare();
     setupExternalLinks();
     setupLightbox();
   }
@@ -72,11 +69,11 @@
   function setupTicker() {
     const t = $("#tickerTrack"); if (!t) return;
     const msgs = [
-      "RELO · O céu vai ser disputado",
-      "Lista de espera aberta · entre grátis",
-      "Membros testam pipas antes de todo mundo",
-      "Feito no Brasil por quem vive a cultura da pipa",
-      "Peça sua skin · libere a prévia",
+      "RELO · Da laje pro céu",
+      "Modo Pipão no ar · Rabiolão e xepa permanente",
+      "Festival Noturno · relo contínuo com a linha acesa",
+      "28 skins na Casa Relo",
+      "Dezembro · Ninja Cone, DJ Colmeia e Passe de 20 níveis",
     ];
     const block = msgs.map(m => `<span>◆ ${m}</span>`).join("");
     t.innerHTML = block + block;

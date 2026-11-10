@@ -2,57 +2,53 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RELO — O jogo de pipa que vai dominar o céu | Pré-lançamento</title>
-  <meta name="description" content="RELO é o jogo online de pipa em desenvolvimento no Brasil. Entre na lista de espera, acompanhe os testes e vire membro para liberar sua pipa antes de todo mundo." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>RELO — O jogo de pipa do Brasil | Da laje pro céu</title>
+  <meta name="description" content="RELO é o jogo online de pipa do Brasil. Cruze a linha, corte o rival, apare a mandada e domine o céu no Clássico, no Festival Noturno e no Modo Pipão." />
   <meta name="theme-color" content="#080910" />
-  <meta property="og:title" content="RELO — O céu vai ser disputado." />
-  <meta property="og:description" content="Jogo online de pipa em desenvolvimento. Garanta seu lugar antes do lançamento." />
-  <meta property="og:image" content="css/mov/Iconedogame.png" />
-  <link rel="icon" type="image/png" href="css/mov/Iconedogame.png" />
-  <link rel="apple-touch-icon" href="css/mov/Iconedogame.png" />
+  <meta property="og:title" content="RELO — Da laje pro céu." />
+  <meta property="og:description" content="O jogo de pipa do Brasil. Clássico, Festival Noturno, Modo Pipão, skins, linhas e carretilhas." />
+  <meta property="og:image" content="https://www.relogame.com.br/media/hero.jpg" />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/png" href="media/icon.png" />
+  <link rel="apple-touch-icon" href="media/icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/launch.css" />
 </head>
-<body>
+<body data-ceu="dia">
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
     <defs>
       <symbol id="i-kite" viewBox="0 0 24 24"><path d="M12 2 21 11 12 22 3 11Z"/><path d="M12 2v20M3 11h18"/></symbol>
       <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
       <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6 18 18M18 6 6 18"/></symbol>
       <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7Z"/></symbol>
-      <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 19c0-2.2-1.8-4-4-4s-4 1.8-4 4"/><circle cx="12" cy="9" r="3"/><path d="M20 19c0-1.8-1-3.2-2.5-3.8M6.5 15.2C5 15.8 4 17.2 4 19"/></symbol>
-      <symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 10.7 15.4 6.3M8.6 13.3l6.8 4.4"/></symbol>
-      <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></symbol>
-      <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
       <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"/></symbol>
-      <symbol id="i-wa" viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0-7.7 13.6L3 21l4.5-1.2A9 9 0 1 0 12 3Z"/><path d="M8.5 8.6c.2-.5.4-.5.7-.5h.5c.2 0 .4 0 .6.5l.7 1.6c.1.2 0 .4-.1.6l-.5.6c-.1.2-.2.3 0 .6.3.5.8 1.1 1.4 1.5.6.4.9.5 1.1.6.2 0 .4 0 .5-.1l.6-.7c.2-.2.4-.2.6-.1l1.5.7c.2.1.4.2.4.4 0 .5-.2 1.3-.7 1.6-.5.3-1.4.5-2.6 0-1.5-.6-2.9-1.6-3.9-3-.6-.8-1.1-1.8-1.1-2.8 0-.7.3-1.2.5-1.5Z"/></symbol>
-      <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9 6.8 19.2l1-5.8-4.3-4.1 5.9-.9L12 3Z"/></symbol>
-      <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+      <symbol id="i-wa" viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0-7.7 13.6L3 21l4.5-1.2A9 9 0 1 0 12 3Z"/><path d="M8.5 8.6c.2-.5.4-.5.7-.5h.5c.2 0 .4 0 .6.5l.7 1.6c.1.2 0 .4-.1.6l-.5.6c-.1.2-.2.3 0 .6.3.5.8 1.100 1.4 1.5.6.4.9.5 1.1.6.2 0 .4 0 .5-.1l.6-.7c.2-.2.4-.2.6-.1l1.5.7c.2.1.4.2.4.4 0 .5-.2 1.3-.7 1.6-.5.3-1.4.5-2.6 0-1.5-.6-2.9-1.6-3.9-3-.6-.8-1.1-1.8-1.1-2.8 0-.7.3-1.2.5-1.5Z"/></symbol>
+      <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.6 5.3 5.9.9-4.3 4.1 1 5.800L12 16.9 6.8 19.2l1-5.8-4.3-4.1 5.9-.9L12 3Z"/></symbol>
+      <symbol id="i-apple" viewBox="0 0 24 24"><path d="M16.6 12.7c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9s-1.8-.8-3-.8c-1.6 0-3 .9-3.8 2.3-1.6 2.8-.4 7 1.2 9.3.8 1.1 1.7 2.4 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7 2.1-1.1 2.8-2.2c.9-1.3 1.3-2.5 1.3-2.6-.1 0-2.5-1-2.5-3.9ZM14.3 5.9c.6-.8 1.1-1.9.9-3-.9 0-2 .6-2.700 1.4-.6.7-1.1 1.800-1 2.9 1.1.1 2.1-.5 2.8-1.3Z"/></symbol>
+      <symbol id="i-gplay" viewBox="0 0 24 24"><path d="M4 3.5v17c0 .6.7 1 1.2.7l14.6-8.5c.5-.3.5-1 0-1.3L5.2 2.8C4.7 2.5 4 2.9 4 3.5Z"/><path d="m4.5 3 9.5 9-9.5 9M14 12l3-3M14 12l3 3"/></symbol>
+      <symbol id="i-pc" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M9 20h6M12 16v4"/></symbol>
     </defs>
   </svg>
 
-  <!-- PRELOADER -->
   <div class="preloader" id="preloader" aria-hidden="true">
-    <img class="pre-logo" src="css/mov/Iconedogame.png" alt="RELO" />
-    <span class="pre-tag">carregando o céu…</span>
+    <img class="pre-logo" src="media/logo.webp" alt="RELO" />
+    <span class="pre-tag">subindo a pipa…</span>
     <div class="pre-bar"><span></span></div>
   </div>
 
-  <!-- AVISO DESKTOP -->
-  <div class="desktop-notice" id="desktopNotice">
-    <span class="dn-icon">🖥️</span>
-    <p>Para a melhor experiência, acesse pelo <b>computador</b>.</p>
-    <button class="dn-close" id="closeNotice" aria-label="Fechar aviso">&times;</button>
-  </div>
-
-  <!-- FUNDO ANIMADO -->
   <canvas class="fx-canvas" id="fxCanvas" aria-hidden="true"></canvas>
   <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
 
-  <!-- TOPO: ticker de anúncio -->
+  <!-- PIPA VIVA: a linha sai da carretilha no pé da tela -->
+  <canvas class="pipa-viva" id="pipaViva" aria-hidden="true"></canvas>
+  <button class="pv-reel" id="pvReel" type="button" aria-label="Soltar a pipa"><img src="media/carretilhas/n_relo_amarela.webp" alt="" draggable="false" /></button>
+  <div class="pv-dica" id="pvDica" aria-hidden="true">Toca na pipa pra <b>desbicar</b> · na carretilha pra <b>soltar</b></div>
+  <div class="pv-placar" id="pvPlacar" aria-live="polite"></div>
+
   <div class="topbar" id="topbar">
     <div class="ticker"><div class="ticker-track" id="tickerTrack"></div></div>
   </div>
@@ -60,18 +56,19 @@
   <header class="nav" id="nav">
     <div class="container nav-inner">
       <a class="brand" href="#topo" aria-label="RELO">
-        <img class="brand-logo" src="css/mov/Iconedogame.png" alt="RELO" />
+        <img class="brand-logo" src="media/logo.webp" alt="RELO" />
       </a>
       <nav class="nav-links" id="navLinks">
-        <a href="#comunidade">Lista de espera</a>
-        <a href="#videos">Vídeos</a>
-        <a href="#membros">Membros</a>
-        <a href="#galeria">Pipas</a>
+        <a href="#trailer">Trailer</a>
+        <a href="#arte">Como joga</a>
+        <a href="#casa">Casa Relo</a>
+        <a href="#modos">Modos</a>
+        <a href="#desafio">Dá um relo</a>
+        <a href="#arsenal">Arsenal</a>
         <a href="pipoints/">Pipoints</a>
-        <a href="#roadmap">Roadmap</a>
       </nav>
       <div class="nav-actions">
-        <a href="#membros" class="btn btn-primary btn-sm">Virar membro</a>
+        <a href="#baixar" class="btn btn-primary btn-sm">Baixar grátis</a>
         <button class="burger" id="burger" aria-label="Abrir menu"><svg><use href="#i-menu"/></svg></button>
       </div>
     </div>
@@ -79,216 +76,203 @@
 
   <main id="topo">
     <!-- HERO -->
-    <section class="hero">
-      <div class="hero-media" aria-hidden="true">
-        <video autoplay muted loop playsinline preload="metadata" poster="css/mov/2996483c-a975-49ae-b108-f46422856512.JPG">
-          <source src="css/mov/gameplay.mp4" type="video/mp4" />
-        </video>
+    <section class="hero hero-v">
+      <div class="hero-media hv-media" aria-hidden="true">
+        <video id="heroVideo" autoplay muted loop playsinline poster="media/hero.jpg" data-hd="media/hero.mp4" data-sd="media/hero-m.mp4" data-pm="media/hero-m.jpg"></video>
       </div>
-      <div class="hero-overlay"></div>
-      <div class="hero-grid-fx" aria-hidden="true"></div>
-      <div class="kite-field" aria-hidden="true">
-        <span class="kite k1"></span><span class="kite k2"></span><span class="kite k3"></span><span class="kite k4"></span>
+      <div class="hero-overlay hv-overlay"></div>
+
+      <div class="corner-vid portrait has-vid hv-corner" aria-hidden="true">
+        <span class="cv-dot">● ao vivo</span>
+        <video data-lazy="media/reel_aparo.mp4" poster="media/reel_aparo.jpg" muted loop playsinline></video>
       </div>
 
-      <div class="container hero-inner">
+      <div class="container hero-inner hv-inner">
         <div class="hero-copy">
-          <span class="kicker reveal"><span class="live-dot">●</span> Em desenvolvimento • Brasil</span>
-          <h1 class="sr-only">RELO — jogo online de pipa</h1>
-          <img class="hero-logo reveal" src="css/mov/Iconedogame.png" alt="RELO — Pipas & Combate" />
-          <p class="hero-sub reveal">O céu vai ser disputado.</p>
-          <p class="lead reveal">O primeiro jogo online de pipa feito por quem vive essa cultura. Voe, cruze a linha, corte o adversário e construa sua coleção. Entre agora — antes de todo mundo.</p>
+          <span class="kicker reveal"><span class="live-dot">●</span> O céu já está disputado</span>
+          <h1 class="sr-only">RELO — o jogo de pipa do Brasil</h1>
+          <img class="hero-logo hv-logo slam" src="media/logo.webp" alt="RELO" />
+          <p class="hero-sub reveal">Da laje pro céu.</p>
+          <p class="lead reveal">Sobe a pipa, cruza com o rival e corta. Apara a mandada, monta sua coleção e faz o nome no céu. Online com a galera ou offline contra até 30 bots.</p>
           <div class="hero-actions reveal">
-            <a href="#comunidade" class="btn btn-primary btn-lg magnetic"><svg><use href="#i-bolt"/></svg> Quero jogar</a>
-            <a href="#videos" class="btn btn-ghost btn-lg magnetic"><svg><use href="#i-play"/></svg> Ver gameplay</a>
-          </div>
-          <div class="hero-trust reveal">
-            <div class="avatar-row" id="heroAvatars"></div>
-            <p><b id="heroTotal" data-count="0">0</b> pessoas já estão na fila do céu</p>
+            <a href="#baixar" class="btn btn-primary btn-lg magnetic"><svg><use href="#i-bolt"/></svg> Jogar agora</a>
+            <button class="btn btn-ghost btn-lg magnetic" id="heroTrailer" type="button"><svg><use href="#i-play"/></svg> Ver o trailer</button>
           </div>
         </div>
-
-        <aside class="launch-card reveal">
-          <span class="live-badge"><span class="live-dot">●</span> Lista de espera aberta</span>
-          <div class="lc-count"><strong id="launchTotal" data-count="0">0</strong><em>aguardando</em></div>
-          <div class="lc-bar"><span id="launchBar"></span></div>
-          <p class="lc-goal">Meta: <b id="launchGoal">5.000</b> antes do beta público</p>
-          <div class="lc-choices">
-            <button class="btn btn-primary magnetic" id="launchJoin" type="button"><svg><use href="#i-bolt"/></svg> Entrar grátis</button>
-            <a href="#membros" class="btn btn-premium magnetic" id="launchPremium"><svg><use href="#i-star"/></svg> Lista premium</a>
-          </div>
-          <span class="lc-mini">Grátis: um clique e você está dentro. Premium: R$ 10 e vira fundador.</span>
-        </aside>
       </div>
-
-      <a href="#comunidade" class="scroll-cue" aria-label="Rolar"><span></span></a>
     </section>
 
-    <!-- LISTA DE ESPERA / HYPE -->
-    <section class="sec wait-section" id="comunidade">
-      <div class="container">
-        <div class="sec-head reveal">
-          <span class="eyebrow">A comunidade está crescendo</span>
-          <h2>Quantas pessoas querem jogar o RELO?</h2>
-          <p>Cada clique é uma pessoa real dizendo "eu vou estar lá no lançamento". Mostre que você também está esperando — e chame a galera.</p>
-        </div>
+    <!-- REELS: o céu passando -->
+    <section class="reels-sec" aria-label="Cenas do jogo">
+      <div class="reels-track" id="reelsTrack"></div>
+    </section>
 
-        <div class="hype-panel reveal">
-          <div class="hype-main">
-            <span class="hype-label"><span class="live-dot">●</span> ao vivo</span>
-            <b class="hype-number" id="waitCount" data-count="0">0</b>
-            <span class="hype-sub">pessoas confirmaram que vão jogar</span>
-            <div class="hype-bar"><span id="waitBar"></span></div>
-            <div class="hype-bar-info"><span>Meta <b id="waitGoal">5.000</b></span><span id="waitPct">0%</span></div>
-          </div>
-          <div class="hype-actions">
-            <button class="btn btn-primary btn-lg wait-btn magnetic" id="confirmWait" type="button"><svg><use href="#i-check"/></svg> Sim, vou jogar</button>
-            <button class="btn btn-ghost btn-lg magnetic" id="shareSite" type="button"><svg><use href="#i-share"/></svg> Chamar meus amigos</button>
-            <p class="microcopy" id="waitHint">Seu clique conta uma única vez neste navegador.</p>
+    <!-- TRAILER + NÚMEROS -->
+    <section class="sec sec-cola" id="trailer">
+      <div class="container vitrine">
+        <div class="trailer-card reveal" id="trailerBox" role="button" tabindex="0" aria-label="Assistir ao trailer com som">
+          <video id="trailerVideo" poster="media/trailer.jpg" muted loop playsinline preload="none"></video>
+          <span class="tc-play"><svg><use href="#i-play"/></svg></span>
+          <span class="tc-tag">Trailer oficial · com som</span>
+        </div>
+        <div class="vitrine-info reveal">
+          <span class="eyebrow">Já tá no ar</span>
+          <h2>Aumenta o som.</h2>
+          <p>41 segundos do que rola no céu do RELO: corte, aparo, Festival Noturno e Pipão.</p>
+          <div class="numeros-grid">
+            <div class="num"><b data-n="3">3</b><span>modos</span></div>
+            <div class="num"><b data-n="30">30</b><span>bots</span></div>
+            <div class="num"><b data-n="28">28</b><span>skins</span></div>
+            <div class="num"><b data-n="10">10</b><span>linhas</span></div>
           </div>
         </div>
-
-        <div class="stat-strip reveal">
-          <div class="stat"><b id="sMembers">0</b><span>membros apoiando</span></div>
-          <div class="stat"><b id="sKites">10</b><span>pipas no acervo</span></div>
-          <div class="stat"><b>45%</b><span>desenvolvido</span></div>
-          <div class="stat"><b>100%</b><span>feito no Brasil</span></div>
-        </div>
       </div>
     </section>
 
-    <!-- VÍDEOS DO JOGO -->
-    <section class="sec videos-section" id="videos">
+    <!-- A ARTE DO RELO -->
+    <section class="sec" id="arte">
       <div class="container">
         <div class="sec-head reveal">
-          <span class="eyebrow">Veja com os próprios olhos</span>
-          <h2>O jogo rodando.</h2>
-          <p>Gameplay, menu e loja capturados direto do RELO. Role a página — os vídeos começam sozinhos, sem áudio.</p>
+          <span class="eyebrow">A arte do relo</span>
+          <h2>Quatro gestos. Um céu inteiro.</h2>
         </div>
-        <div class="game-video-grid" id="gameVideoGrid"></div>
+      </div>
+      <div class="gestos" id="gestos">
+        <article class="gesto reveal"><video data-lazy="media/corte_v.mp4" poster="media/corte_v.jpg" muted loop playsinline></video><div class="g-txt"><b>01</b><h3>Corta</h3><p>Cruza na linha do rival e segura o atrito. O dano sobe até a dele ceder.</p></div></article>
+        <article class="gesto reveal"><video data-lazy="media/aparo_v.mp4" poster="media/aparo_v.jpg" muted loop playsinline></video><div class="g-txt"><b>02</b><h3>Apara</h3><p>Pipa cortada virou mandada. Encosta a linha, ela gruda e desce até sua mão.</p></div></article>
+        <article class="gesto reveal"><video data-lazy="media/linha_v.mp4" poster="media/linha_v.jpg" muted loop playsinline></video><div class="g-txt"><b>03</b><h3>Dá linha</h3><p>Solta pra ganhar altura e velocidade, puxa pra mudar o ângulo e atacar.</p></div></article>
+        <article class="gesto reveal"><video data-lazy="media/corre_v.mp4" poster="media/corre_v.jpg" muted loop playsinline></video><div class="g-txt"><b>04</b><h3>Corre</h3><p>Desce a laje, sobe a ladeira. O morro inteiro é seu atrás do melhor céu.</p></div></article>
       </div>
     </section>
 
-    <!-- MEMBROS / DESTAQUE -->
-    <section class="sec members-section" id="membros">
+    <!-- CASA RELO -->
+    <section class="sec casa-sec" id="casa">
       <div class="container">
         <div class="sec-head reveal">
-          <span class="eyebrow">Faça parte da construção</span>
-          <h2>Entre no céu antes de todo mundo.</h2>
-          <p>Tem dois jeitos de participar: de graça, só pra trocar ideia, ou como membro — ajudando o jogo a existir e liberando privilégios de quem chegou primeiro.</p>
+          <span class="eyebrow">Casa Relo</span>
+          <h2>Quem você vai ser no morro?</h2>
         </div>
-
-        <div class="plans-grid">
-          <!-- FREE -->
-          <article class="plan plan-free reveal">
-            <div class="plan-top">
-              <span class="plan-tag">Grátis</span>
-              <h3>Comunidade aberta</h3>
-              <p class="plan-desc">O ponto de encontro da galera. Sem custo, sem compromisso.</p>
+        <div class="filter-row reveal" id="skinFiltros">
+          <button class="chip active" data-f="especial">Especiais</button>
+          <button class="chip" data-f="anime">Lendas</button>
+          <button class="chip" data-f="mandrake">Cria</button>
+        </div>
+      </div>
+      <div class="skins-wrap reveal">
+        <div class="skins" id="skinsTrack"></div>
+      </div>
+      <div class="container">
+        <div class="drop reveal">
+          <div class="drop-skins">
+            <img src="media/skins/especial_ninja_cone.webp" alt="Ninja Cone" loading="lazy" />
+            <img src="media/skins/especial_dj_colmeia.webp" alt="DJ Colmeia" loading="lazy" />
+          </div>
+          <div class="drop-copy">
+            <span class="eyebrow">Chega em dezembro</span>
+            <h3>Ninja Cone e DJ Colmeia junto com o Passe.</h3>
+            <div class="contagem" id="contagem" aria-live="off">
+              <div><b data-c="d">00</b><span>dias</span></div>
+              <div><b data-c="h">00</b><span>horas</span></div>
+              <div><b data-c="m">00</b><span>min</span></div>
+              <div><b data-c="s">00</b><span>seg</span></div>
             </div>
-            <div class="plan-price"><span class="pp-cur">R$</span><span class="pp-val">0</span></div>
-            <ul class="plan-list">
-              <li><svg><use href="#i-check"/></svg> Grupo aberto no WhatsApp</li>
-              <li><svg><use href="#i-check"/></svg> Conversar com outros jogadores</li>
-              <li><svg><use href="#i-check"/></svg> Receber novidades e datas</li>
-              <li><svg><use href="#i-check"/></svg> Compartilhar pipas e referências</li>
-            </ul>
-            <a href="#" class="btn btn-ghost btn-block magnetic" id="communityWhatsapp" data-wa="free"><svg><use href="#i-wa"/></svg> Entrar no grupo grátis</a>
-            <span class="plan-foot">Sempre vai ser de graça.</span>
-          </article>
-
-          <!-- MEMBRO R$10 (DESTAQUE) -->
-          <article class="plan plan-member reveal" id="membro">
-            <div class="plan-flare" aria-hidden="true"></div>
-            <span class="plan-ribbon">Mais escolhido</span>
-            <div class="plan-top">
-              <span class="plan-tag gold"><svg><use href="#i-star"/></svg> Membro RELO</span>
-              <h3>Apoiador fundador</h3>
-              <p class="plan-desc">Ajuda o jogo a sair do papel e ganha acesso de quem constrói junto.</p>
-            </div>
-            <div class="plan-price gold"><span class="pp-cur">R$</span><span class="pp-val">10</span><span class="pp-per">/mês</span></div>
-            <p class="monthly-note"><b>Cobrança mensal.</b> Você apoia o jogo todo mês e mantém os privilégios de membro enquanto for fundador.</p>
-
-            <div class="perk-hero">
-              <svg><use href="#i-kite"/></svg>
-              <div>
-                <b>Sua pipa dentro do jogo</b>
-                <span>Mandou a skin que você quer? A gente cria e te dá acesso à <i>prévia</i> pra testar antes de todo mundo.</span>
-              </div>
-            </div>
-
-            <ul class="plan-list">
-              <li><svg><use href="#i-check"/></svg> Acesso antecipado às versões de teste</li>
-              <li><svg><use href="#i-check"/></svg> Peça sua pipa/skin específica e teste a prévia</li>
-              <li><svg><use href="#i-check"/></svg> Grupo privado de membros no WhatsApp</li>
-              <li><svg><use href="#i-check"/></svg> Suas sugestões viram prioridade</li>
-            </ul>
-
-            <div class="unlimited-row">
-              <svg viewBox="0 0 24 24"><path d="M7 8c-2.8 0-5 1.8-5 4s2.2 4 5 4c4 0 6-8 10-8 2.8 0 5 1.8 5 4s-2.2 4-5 4c-4 0-6-8-10-8Z"/></svg>
-              <span><b>Vagas ilimitadas.</b> Quanto mais gente apoiando, mais rápido o RELO sai do papel.</span>
-            </div>
-
-            <div class="member-actions">
-              <button class="btn btn-primary btn-block btn-lg magnetic" id="pixButton" type="button"><svg><use href="#i-bolt"/></svg> Copiar PIX (R$ 10/mês)</button>
-              <a href="#" class="btn btn-ghost btn-block magnetic" id="supportWhatsapp" data-wa="vip"><svg><use href="#i-wa"/></svg> Grupo de membros</a>
-            </div>
-            <p class="member-note"><b>Importante:</b> ao entrar no grupo de membros, envie o comprovante do PIX na hora. Quem entra e não manda o comprovante é removido.</p>
-          </article>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- GALERIA DE PIPAS -->
-    <section class="sec gallery-section" id="galeria">
+    <!-- MODOS -->
+    <section class="sec modos-sec" id="modos">
       <div class="container">
         <div class="sec-head reveal">
-          <span class="eyebrow">O acervo</span>
-          <h2>Pipas que vão pro céu do RELO.</h2>
-          <p>Referências reais da comunidade. Como membro, você pode pedir a sua. Toque para ampliar.</p>
+          <span class="eyebrow">Novidades no céu</span>
+          <h2>Escolhe a sua guerra.</h2>
         </div>
-        <div class="filter-row reveal" id="galleryFilters">
-          <button class="chip active" data-filter="all">Todas</button>
-          <button class="chip" data-filter="Quadrada">Quadradas</button>
-          <button class="chip" data-filter="Raia">Raias</button>
-          <button class="chip" data-filter="Especial">Especiais</button>
-        </div>
-        <div class="showcase-grid" id="galleryGrid"></div>
+      </div>
+      <div class="modos2" id="modos2">
+        <article class="modo2 active" data-m="classico" data-ceu="dia">
+          <video data-lazy="media/classico_v.mp4" poster="media/classico_v.jpg" muted loop playsinline></video>
+          <div class="m2-info"><span class="modo-tag">Dia na favela</span><h3>Clássico</h3><p>O relo de raiz: corta, apara, recolhe e faz a coleção crescer.</p><ul><li>Corte</li><li>Aparo</li><li>Réu</li><li>Online e offline</li></ul></div>
+          <img class="m2-ico" src="media/pipas/pipa1_aguia.webp" alt="" loading="lazy" />
+        </article>
+        <article class="modo2" data-m="noturno" data-ceu="noite">
+          <video data-lazy="media/noturno_v.mp4" poster="media/noturno_v.jpg" muted loop playsinline></video>
+          <div class="m2-info"><span class="modo-tag novo">Novo</span><h3>Festival Noturno</h3><p>Céu fechado, raias no ar e linha acesa cortando o escuro.</p><ul><li>Só raias</li><li>Relo contínuo</li><li>Sem aparo</li></ul></div>
+          <img class="m2-ico" src="media/pipas/pipa1_estrela.webp" alt="" loading="lazy" />
+        </article>
+        <article class="modo2" data-m="pipao" data-ceu="dia">
+          <video data-lazy="media/pipao_v.mp4" poster="media/pipao_v.jpg" muted loop playsinline></video>
+          <div class="m2-info"><span class="modo-tag novo">Novo</span><h3>Modo Pipão</h3><p>Pipa gigante e Rabiolão automático. O morro inteiro vê quem chegou.</p><ul><li>Rabiolão</li><li>Xepa permanente</li><li>Até 15 bots</li></ul></div>
+          <img class="m2-ico" src="media/pipas/pipao_laminado.webp" alt="" loading="lazy" />
+        </article>
       </div>
     </section>
 
-    <!-- ROADMAP -->
-    <section class="sec roadmap-section" id="roadmap">
+    <!-- DESAFIO -->
+    <section class="sec desafio-sec" id="desafio">
       <div class="container">
         <div class="sec-head reveal">
-          <span class="eyebrow">A caminho do lançamento</span>
-          <h2>Onde o RELO está agora.</h2>
-          <p>Transparência total. Você acompanha cada fase — e ajuda a chegar mais rápido.</p>
+          <span class="eyebrow">Testa a mão</span>
+          <h2>Dá um relo aqui mesmo.</h2>
         </div>
-        <div class="dev-progress reveal">
-          <div class="dp-head"><span>Progresso geral do desenvolvimento</span><b id="devPct">45%</b></div>
-          <div class="dp-bar"><span id="devBar"></span></div>
-        </div>
-        <div class="road-grid">
-          <article class="road done reveal"><span class="road-ph">Fase 01</span><h3>Protótipo voando</h3><p>Física da pipa, vento e corte da linha funcionando.</p><span class="road-state">Concluído</span></article>
-          <article class="road done reveal"><span class="road-ph">Fase 02</span><h3>Identidade & menu</h3><p>Visual do jogo, menu e loja em construção.</p><span class="road-state">Concluído</span></article>
-          <article class="road active reveal"><span class="road-ph">Fase 03</span><h3>Testes fechados</h3><p>Membros fundadores testando skins e equilíbrio.</p><span class="road-state">Em andamento</span></article>
-          <article class="road reveal"><span class="road-ph">Fase 04</span><h3>Beta público</h3><p>Aberto para toda a lista de espera.</p><span class="road-state">Em breve</span></article>
-          <article class="road reveal"><span class="road-ph">Fase 05</span><h3>Lançamento</h3><p>Ranqueadas, clãs e o céu aberto pra todos.</p><span class="road-state">Próximo</span></article>
+        <div class="jogo reveal" id="jogoBox">
+          <canvas id="jogoCanvas" width="1280" height="620"></canvas>
+          <div class="jogo-hud"><span>Relos <b id="jgPts">0</b></span><span>Tempo <b id="jgTempo">30</b></span><span>Recorde <b id="jgRec">0</b></span></div>
+          <div class="jogo-vida" aria-hidden="true"><i id="jgVida"></i></div>
+          <div class="jogo-grito" id="jgGrito"></div>
+          <div class="jogo-ini" id="jgIni">
+            <h3 id="jgTit">Céu liberado</h3>
+            <p id="jgMsg">Arrasta a pipa e cruza na linha dos rivais. Toca pra desbicar. Mandada caindo? Encosta a linha e apara.</p>
+            <button class="btn btn-primary btn-lg" id="jgBtn" type="button"><svg><use href="#i-kite"/></svg> Subir pipa</button>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- CTA FINAL -->
+    <!-- ARSENAL -->
+    <section class="sec" id="arsenal">
+      <div class="container">
+        <div class="sec-head reveal">
+          <span class="eyebrow">Arsenal</span>
+          <h2>Pipa, linha e carretilha.</h2>
+          <p>Toca numa cor e olha a linha da sua pipa mudar.</p>
+        </div>
+        <div class="ars-linhas reveal" id="arsLinhas"></div>
+        <div class="car-row reveal" id="arsCar"></div>
+      </div>
+      <div class="pipas-mq" aria-hidden="true"><div class="pipas-track" id="pipasTrack"></div></div>
+    </section>
+
+    <!-- GALERIA + PIPOINTS -->
+    <section class="sec galeria-sec" id="galeria">
+      <div class="gal-track" id="galTrack"></div>
+      <div class="container">
+        <div class="pp-cta reveal">
+          <div>
+            <span class="eyebrow">Pipoints</span>
+            <h2>A moeda do céu.</h2>
+            <p>Pacotes a partir de R$ 4,90 pra pegar skin, linha, carretilha e combo. Cai na mesma conta do jogo.</p>
+          </div>
+          <a class="btn btn-premium btn-lg magnetic" href="pipoints/"><svg><use href="#i-star"/></svg> Ver pacotes</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- BAIXAR -->
     <section class="sec download" id="baixar">
-      <div class="container cta-final reveal">
-        <div class="kite-field cta-kites" aria-hidden="true"><span class="kite k1"></span><span class="kite k2"></span></div>
+      <div class="container cta-final cta-video reveal">
+        <video data-lazy="media/noturno.mp4" poster="media/noturno.jpg" muted loop playsinline aria-hidden="true"></video>
+        <div class="cta-cobre"></div>
         <span class="eyebrow">O céu está chamando</span>
-        <h2>Pronto pra cortar a primeira linha?</h2>
-        <p>Entre na lista, chame os amigos e — se quiser — vire membro pra construir o RELO junto com a gente.</p>
+        <h2>Bora cortar a primeira linha?</h2>
+        <p>Grátis pra jogar. Chama a galera e sobe a pipa.</p>
+        <div class="lojas">
+          <a class="loja magnetic" href="#" data-loja="appstore"><svg><use href="#i-apple"/></svg><span><small>Baixar na</small><b>App Store</b></span></a>
+          <a class="loja magnetic" href="#" data-loja="googleplay"><svg><use href="#i-gplay"/></svg><span><small>Disponível no</small><b>Google Play</b></span></a>
+          <a class="loja magnetic" href="#" data-loja="windows"><svg><use href="#i-pc"/></svg><span><small>Jogar no</small><b>Windows</b></span></a>
+        </div>
         <div class="cta-actions">
-          <a class="btn btn-primary btn-lg magnetic" href="#comunidade"><svg><use href="#i-bolt"/></svg> Quero jogar</a>
-          <a class="btn btn-ghost btn-lg magnetic" href="#membros"><svg><use href="#i-star"/></svg> Virar membro</a>
+          <a href="#" class="btn btn-ghost magnetic" id="communityWhatsapp" data-wa="free"><svg><use href="#i-wa"/></svg> Entrar no grupo da galera</a>
         </div>
       </div>
     </section>
@@ -296,16 +280,15 @@
 
   <footer class="footer">
     <div class="container foot-inner">
-      <div class="brand"><svg class="mark"><use href="#i-kite"/></svg><span>RELO</span></div>
-      <span>RELO Games • Jogo de pipa online em desenvolvimento no Brasil.</span>
+      <div class="brand"><img class="brand-logo" src="media/logo.webp" alt="RELO" /></div>
+      <span>RELO Games • O jogo de pipa do Brasil.</span>
       <div class="social">
-        <a href="#comunidade" aria-label="Comunidade"><svg><use href="#i-users"/></svg></a>
-        <a href="#videos" aria-label="Vídeos"><svg><use href="#i-play"/></svg></a>
-        <a href="#membros" aria-label="Membros"><svg><use href="#i-star"/></svg></a>
+        <a href="#baixar" aria-label="Baixar"><svg><use href="#i-bolt"/></svg></a>
+        <a href="#trailer" aria-label="Trailer"><svg><use href="#i-play"/></svg></a>
+        <a href="pipoints/" aria-label="Pipoints"><svg><use href="#i-star"/></svg></a>
       </div>
     </div>
-    <div class="signature">ASSINATURA OFICIAL RELO</div>
-    <nav class="container" aria-label="Documentos legais" style="display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:center;padding:14px 0 4px;font:600 15px Rajdhani,sans-serif">
+    <nav class="container" aria-label="Documentos legais" style="display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:center;padding:18px 0 4px;font:600 15px Rajdhani,sans-serif">
       <a href="legal/termos.html" style="color:#c6ccd8">Termos de Uso</a>
       <a href="legal/privacidade.html" style="color:#c6ccd8">Política de Privacidade</a>
       <a href="conta/excluir.html" style="color:#c6ccd8">Excluir minha conta</a>
@@ -313,21 +296,14 @@
     </nav>
   </footer>
 
-  <!-- LIGHTBOX -->
   <div class="lightbox" id="lightbox" aria-hidden="true">
     <button class="lb-close" id="lbClose" aria-label="Fechar"><svg><use href="#i-x"/></svg></button>
     <div class="lb-inner" id="lbInner"></div>
   </div>
-
   <div class="toast" id="toast"></div>
 
-  <script>
-    document.getElementById('closeNotice').addEventListener('click',function(){
-      document.getElementById('desktopNotice').style.display='none';
-    });
-  </script>
   <script src="js/config.js"></script>
-  <script src="js/api.js"></script>
   <script src="js/app.js"></script>
+  <script src="js/launch.js"></script>
 </body>
 </html>

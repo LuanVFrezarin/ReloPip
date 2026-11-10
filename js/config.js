@@ -86,6 +86,10 @@
     },
 
     DOWNLOADS: { windows: "#", android: "#", ios: "#", versao: "0.9.0 (Beta)", tamanho: "420 MB" },
+    // Preencha quando cada loja publicar: os botões do site passam a abrir o link.
+    // App Store: https://apps.apple.com/br/app/relo/id6806365806
+    // Google Play: https://play.google.com/store/apps/details?id=com.relogame.game
+    LOJAS: { appstore: "", googleplay: "", windows: "" },
     PAGAMENTO: { provider: "mercadopago", moeda: "BRL" },
     LINKS: {
       whatsapp: "https://chat.whatsapp.com/Ls8HBv661sO7fnt6NtETIt?s=cl&p=i&mlu=1&amv=2",
