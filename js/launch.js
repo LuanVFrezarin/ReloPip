@@ -78,7 +78,11 @@
     return p;
   }
   function passoPipa(p, dt, mundo) {
-    const desb = p.puxa && p.da, VP = p.vp;
+    const desb = p.puxa && p.da, VP = p.vp / Math.sqrt(p.z || 1);
+    if (p.z) {   // distância da pipa, como as faixas de linha do jogo
+      if (desb) p.z -= .0015 * dt; else if (p.puxa) p.z -= .0045 * dt; else if (p.da) p.z += .013 * dt;
+      p.z = Math.max(p.zMin, Math.min(p.zMax, p.z));
+    }
     const clique = (p.puxa || desb) && !p.ant; p.ant = p.puxa || desb;
     if (clique) { p.giro = -p.giro; p.tSolta = 0; }
     let avx = mundo.vento * .25 * p.U, avy = 0, env = 0, laco = .1;
@@ -95,7 +99,8 @@
       p.lmax = Math.max(p.lmin, p.lmax - .08 * p.U * dt);
       p.vis *= .8; p.estado = "puxa";
     } else if (p.da) {
-      avx = Math.sin(p.a) * VP * .45; avy = -Math.cos(p.a) * VP * .45 + .12 * p.U;
+      // dar linha: a pipa vai embora com o vento, ganhando distância (fica menor) sem despencar
+      avx = Math.sin(p.a) * VP * .3 + mundo.vento * .4 * p.U; avy = -Math.cos(p.a) * VP * .3 - .22 * p.U;
       p.lmax = Math.min(p.lmaxMax, p.lmax + 2.2 * p.U * dt);
       p.vis *= .85; p.estado = "da"; env = 1;
     } else {
@@ -132,11 +137,14 @@
     if (p.y < mundo.teto + m) { p.y = mundo.teto + m; p.vy = Math.abs(p.vy) * .3; if (Math.cos(p.a) > 0) p.a = Math.PI - p.a; }
     if (p.y > mundo.chao) { p.y = mundo.chao; p.vy = -Math.abs(p.vy) * .3; p.a += angDif(p.a, 0) * .25; }
     p.a = angDif(0, p.a);
-    if (mundo.prof) p.esc = mundo.prof(p.y) * (1 - .3 * Math.max(0, Math.min(1, (p.lmax - p.lmin) / Math.max(1, p.lmaxMax - p.lmin))));
+    if (p.z) p.esc += (1 / p.z - p.esc) * .2;
+    else if (mundo.prof) p.esc = mundo.prof(p.y) * (1 - .3 * Math.max(0, Math.min(1, (p.lmax - p.lmin) / Math.max(1, p.lmaxMax - p.lmin))));
     rabiolaNaPonta(p, mundo.vento - p.vx * .06, 1);
   }
   // rabiola presa na ponta de baixo da pipa (acompanha giro, desbico e envergadura)
   function rabiolaNaPonta(p, vento, dt) {
+    if (p.rab.seg0 == null) p.rab.seg0 = p.rab.seg;
+    p.rab.seg = p.rab.seg0 * Math.min(1.3, p.esc);
     const ang = p.a + p.vis, s = p.s * p.esc * (.9 + .1 * p.env) * .48;
     passoRabiola(p.rab, p.x - Math.sin(ang) * s, p.y + Math.cos(ang) * s, vento, dt);
   }
@@ -268,7 +276,7 @@
     const p = m.p; m.t += dt;
     p.vx += (mundo.vento * .9 * U + Math.sin(m.t * .05) * .7 - p.vx) * .05 * dt; p.vy += (queda * U - p.vy) * .04 * dt;
     p.x += p.vx * dt; p.y += p.vy * dt; p.a += (m.va + Math.sin(m.t * .04) * .012) * dt; p.vis *= .95; p.env += (.55 - p.env) * .05 * dt;
-    if (mundo.prof) p.esc = mundo.prof(p.y);
+    if (!p.z && mundo.prof) p.esc = mundo.prof(p.y);
     rabiolaNaPonta(p, mundo.vento, dt);
     passoRabiola(m.linha, p.x, p.y + p.s * p.esc * .08, mundo.vento * .5, dt);
   }
@@ -499,20 +507,13 @@
 
     function nasce() {
       const o = O();
-      eu = novaPipa({ x: o.x, y: o.y - 30, a: 0, s: 70 * U, U, vp: Math.max(2.2, W * .0026), ancora: o, lmax: H * .7, lmin: H * .35, lmaxMax: H * 1.1, spr: SK[(Math.random() * SK.length) | 0], agr: 1.1, semente: Math.random() * 9 });
+      eu = novaPipa({ x: W * (celular ? .7 : .78), y: H * .24, a: 0, s: 70 * U, U, vp: Math.max(2.2, W * .0026), ancora: o, lmax: H * .7, lmin: H * .35, lmaxMax: H * 1.1, spr: SK[(Math.random() * SK.length) | 0], agr: 1.1, semente: Math.random() * 9 });
       eu.ia = "puxa"; eu.tIA = 40;
     }
     nasce();
 
-    if (!guarda.ler("relo_pv_dica", "")) {
-      const mostra = () => {
-        if (scrollY < innerHeight * .8) return;
-        removeEventListener("scroll", mostra);
-        dica.classList.add("show"); guarda.salvar("relo_pv_dica", "1");
-        setTimeout(() => dica.classList.remove("show"), 6500);
-      };
-      addEventListener("scroll", mostra, { passive: true });
-    }
+    // indicador em cima da pipa até a pessoa usar pela primeira vez
+    let usou = guarda.ler("relo_pv_usou", "") === "1";
 
     let perto = false;
     const jb = $("#jogoBox");
@@ -534,6 +535,7 @@
     const fim = () => {
       if (!arrasto) return;
       const toque = !arrasto.mexeu && performance.now() - arrasto.t < 380; arrasto = null;
+      if (!usou) { usou = true; guarda.salvar("relo_pv_usou", "1"); }
       if (toque && eu) {   // desbico na hora, com arranco
         eu.ia = "desb"; eu.tIA = 44; ordem = 44; eu.puxa = eu.da = true;
         eu.vx += Math.sin(eu.a) * eu.vp * 1.6; eu.vy -= Math.cos(eu.a) * eu.vp * 1.6;
@@ -649,7 +651,26 @@
       if (eu) { desenhaLinha(g, linhaDe(eu), cor, celular ? 1.4 : 1.6, celular ? 0 : 6); desenhaPipa(g, eu); }
       sparks = desenhaFaiscas(g, sparks, dt, 2.5);
       textos = desenhaTextos(g, textos, dt);
+      if (eu && !usou && !arrasto && eu.y < H * .42) indicador(eu, agora);
       requestAnimationFrame(quadro);
+    }
+    function indicador(p, t) {
+      const pulso = (t % 1400) / 1400, R = Math.max(30, p.s * p.esc * .7);
+      g.strokeStyle = `rgba(255,209,90,${.9 * (1 - pulso)})`; g.lineWidth = 2.5;
+      g.beginPath(); g.arc(p.x, p.y, R + pulso * 26, 0, TAU); g.stroke();
+      g.strokeStyle = "rgba(255,209,90,.9)"; g.setLineDash([5, 5]); g.lineWidth = 1.5;
+      g.beginPath(); g.arc(p.x, p.y, R, 0, TAU); g.stroke(); g.setLineDash([]);
+      const txt = celular ? "Segura e arrasta a pipa" : "Clica, segura e arrasta a pipa", sub = "toca rápido pra desbicar";
+      g.font = `700 ${celular ? 12 : 13}px Rajdhani, Arial, sans-serif`;
+      const w = Math.max(g.measureText(txt).width, g.measureText(sub).width) + 44, h = 40;
+      let x = p.x - w - R - 6, y = p.y + R * .2;
+      if (x < 8) x = p.x + R + 6; if (x + w > W - 8) x = W - w - 8; y = Math.max(80, Math.min(H - 120, y));
+      const bob = Math.sin(t * .006) * 3;
+      g.fillStyle = "rgba(8,10,20,.9)"; g.strokeStyle = "rgba(255,209,90,.6)"; g.lineWidth = 1;
+      g.beginPath(); g.roundRect ? g.roundRect(x, y + bob, w, h, 12) : g.rect(x, y + bob, w, h); g.fill(); g.stroke();
+      g.textAlign = "left"; g.fillStyle = "#fff"; g.fillText(txt, x + 34, y + bob + 17);
+      g.fillStyle = "#ffd15a"; g.font = `600 ${celular ? 11 : 12}px Rajdhani, Arial, sans-serif`; g.fillText(sub, x + 34, y + bob + 31);
+      g.font = "18px sans-serif"; g.fillText("👆", x + 9, y + bob + 27);
     }
     requestAnimationFrame(quadro);
   })();
@@ -670,7 +691,7 @@
     const HOR = H * (retrato ? .7 : .72);                 // linha do horizonte
     const CW = (retrato ? 330 : 300) * U * (retrato ? .8 : 1), CH = CW * 446 / 520;   // personagem de costas
     const MAO = { x: W / 2 + CW * .08, y: H - CH * .92 };
-    const mundo = { W, H, teto: (retrato ? 120 : 46) * U, chao: HOR * .8, alto: HOR * .5, vento: .3, t: 0, prof: y => .6 + .22 * Math.max(0, Math.min(1, (y - 40) / (HOR - 40))) };
+    const mundo = { W, H, teto: (retrato ? 120 : 46) * U, chao: HOR * .66, alto: HOR * .42, vento: .3, t: 0, prof: y => .6 + .22 * Math.max(0, Math.min(1, (y - 40) / (HOR - 40))) };
     const BASES = [.06, .94, .2, .8, .33, .67].map(f => ({ x: W * f, y: HOR + 6 * U + Math.abs(f - .5) * 26 * U }));
     let rec = Number(guarda.ler(REC, 0)) || 0, rodando = false, visivel = false, laco = false, ult = 0;
     let pts = 0, fim = 0, eu = null, bots = [], engate = null, mandadas = [], aparadas = [], restos = [], sparks = [], textos = [], cortes = [], renasce = 0, proxBot = 0, relosTotal = 0;
@@ -708,12 +729,12 @@
     const nuvens = Array.from({ length: 6 }, () => ({ x: Math.random() * W, y: 40 + Math.random() * HOR * .55, s: (.6 + Math.random() * .8) * U, v: .12 + Math.random() * .2 }));
 
     function nasceEu() {
-      eu = novaPipa({ x: MAO.x, y: MAO.y - H * .52, a: 0, s: 34 * U, U, vp: W * .0021, ancora: MAO, dmin: H * .5, livre: true, lmax: H, lmin: 0, lmaxMax: H * 3, spr: MINHA, nRab: 16, segRab: 4.2, semente: 1 });
+      eu = novaPipa({ x: MAO.x, y: MAO.y - H * .52, a: 0, s: 34 * U, U, vp: W * .0034, z: 1.4, zMin: .8, zMax: 3.2, ancora: MAO, dmin: H * .5, livre: true, lmax: H, lmin: 0, lmaxMax: H * 3, spr: MINHA, nRab: 16, segRab: 4.2, semente: 1 });
       eu.subindo = 40;
     }
     function nasceBot(pipao) {
       const base = BASES[(Math.random() * BASES.length) | 0];
-      const b = novaPipa({ x: base.x, y: base.y - 50 * U, a: (base.x < W / 2 ? .5 : -.5), s: (pipao ? 54 : 28 + Math.random() * 6) * U, U, vp: W * (pipao ? .0017 : .002), ancora: base, dmin: H * .3, livre: true, lmax: H, lmin: 0, lmaxMax: H * 3, spr: pipao ? BOSS : SPR[(Math.random() * SPR.length) | 0], agr: pipao ? .6 : .7 + Math.random() * .6, semente: Math.random() * 9, nRab: pipao ? 18 : 13, segRab: pipao ? 6 : 3.6 });
+      const b = novaPipa({ x: base.x, y: base.y - 50 * U, a: (base.x < W / 2 ? .5 : -.5), s: (pipao ? 54 : 28 + Math.random() * 6) * U, U, vp: W * (pipao ? .0026 : .0031), z: 1.3 + Math.random() * .9, zMin: .9, zMax: 3, ancora: base, dmin: H * .3, livre: true, lmax: H, lmin: 0, lmaxMax: H * 3, spr: pipao ? BOSS : SPR[(Math.random() * SPR.length) | 0], agr: pipao ? .6 : .7 + Math.random() * .6, semente: Math.random() * 9, nRab: pipao ? 18 : 13, segRab: pipao ? 6 : 3.6 });
       b.pipao = pipao; b.grande = pipao; b.vida = pipao ? 2.6 : 1; b.entrando = 50;
       bots.push(b);
     }
@@ -849,7 +870,7 @@
       });
       mandadas.forEach(m => desenhaMandada(g, m, U));
       if (eu && minhaL) {
-        aparadas.forEach(a => { a.u -= .014 * dt; const q = pontoNaLinha(minhaL, Math.max(0, a.u)); a.p.x = q.x; a.p.y = q.y; a.p.esc = mundo.prof(q.y); passoRabiola(a.p.rab, q.x, q.y + a.p.s * a.p.esc * .3, mundo.vento, dt); desenhaPipa(g, a.p); });
+        aparadas.forEach(a => { a.u -= .014 * dt; const q = pontoNaLinha(minhaL, Math.max(0, a.u)); a.p.x = q.x; a.p.y = q.y; a.p.esc = a.p.z ? a.p.esc : mundo.prof(q.y); passoRabiola(a.p.rab, q.x, q.y + a.p.s * a.p.esc * .3, mundo.vento, dt); desenhaPipa(g, a.p); });
         aparadas = aparadas.filter(a => a.u > 0);
         desenhaLinha(g, minhaL, cor, 4.2 * U, 8, .3);
         desenhaPipa(g, eu);
