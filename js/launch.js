@@ -56,7 +56,9 @@
       const a = p[i - 1], q = p[i];
       let dx = q.x - a.x, dy = q.y - a.y;
       const d = Math.hypot(dx, dy) || 1;
-      dx = dx / d * .8 + vento * .12; dy = dy / d * .8 + .2;
+      r.f = (r.f || 0) + .0025 * dt;
+      const tremor = Math.sin(r.f * 60 - i * .7) * .09 * (i / p.length);
+      dx = dx / d * .94 + vento * .05 + tremor; dy = dy / d * .94 + .045;
       const n = Math.hypot(dx, dy) || 1;
       q.x += (a.x + dx / n * r.seg - q.x) * k; q.y += (a.y + dy / n * r.seg - q.y) * k;
     }
@@ -65,21 +67,21 @@
   function desenhaRabiola(g, r, larg) {
     const p = r.p; g.lineCap = "butt"; g.strokeStyle = "#0b0c14";
     for (let i = 1; i < p.length; i += 2) {
-      g.lineWidth = larg * (1 - i / p.length * .35);
+      g.lineWidth = larg * (1 - i / p.length * .5);
       g.beginPath(); g.moveTo(p[i - 1].x, p[i - 1].y); g.lineTo(p[i].x, p[i].y); g.stroke();
     }
   }
 
   function novaPipa(o) {
     const p = Object.assign({ x: 0, y: 0, vx: 0, vy: 0, a: 0, vis: 0, env: 1, esc: 1, giro: 1, tSolta: 0, tPuxa: 0, fase: 0, puxa: false, da: false, ant: false, s: 80, U: 1, vp: 5, lmax: 400, lmin: 200, lmaxMax: 900, spr: null, vida: 1, ia: "mira", tIA: 0, agr: 1, estado: "roda", engate: null }, o);
-    p.rab = criaRabiola(o.nRab || 16, (o.U || 1) * (o.segRab || 9));
+    p.rab = criaRabiola(Math.round((o.nRab || 16) * 1.35), (o.U || 1) * (o.segRab || 9) * .75);
     return p;
   }
   function passoPipa(p, dt, mundo) {
     const desb = p.puxa && p.da, VP = p.vp;
     const clique = (p.puxa || desb) && !p.ant; p.ant = p.puxa || desb;
     if (clique) { p.giro = -p.giro; p.tSolta = 0; }
-    let avx = mundo.vento * .25 * p.U, avy = 0, env = 1;
+    let avx = mundo.vento * .25 * p.U, avy = 0, env = 1, laco = .1;
     if (desb) {
       p.fase += dt / 27;
       const lado = (Math.floor(p.fase) % 2) ? 1 : -1;
@@ -88,24 +90,27 @@
       p.vis += (lado * .5 - p.vis) * .25 * dt; p.estado = "desbica";
     } else if (p.puxa) {
       p.tPuxa += dt;
-      const k = Math.min(1, .3 + p.tPuxa / 24);
+      const k = Math.min(1, .25 + p.tPuxa / 30);
       avx = Math.sin(p.a) * VP * k; avy = -Math.cos(p.a) * VP * k;
       p.lmax = Math.max(p.lmin, p.lmax - .08 * p.U * dt);
       p.vis *= .8; p.estado = "puxa";
     } else if (p.da) {
       avx = Math.sin(p.a) * VP * .45; avy = -Math.cos(p.a) * VP * .45 + .12 * p.U;
       p.lmax = Math.min(p.lmaxMax, p.lmax + 2.2 * p.U * dt);
-      p.vis *= .85; p.estado = "da"; env = .82;
+      p.vis *= .85; p.estado = "da"; env = 0;
     } else {
       p.tPuxa = 0; p.tSolta += dt;
-      if (p.tSolta < 180) {   // murcha: roda e perde altura
-        const w = .1 * (p.tSolta < 120 ? 1 : 1 - (p.tSolta - 120) / 60);
-        p.a += p.giro * w * dt; avy = .38 * p.U; env = .62; p.estado = "roda";
-      } else { p.a += angDif(p.a, Math.sin(mundo.t * 1.3) * .12) * .02 * dt; avy = .12 * p.U; env = .8; p.estado = "parada"; }
+      if (p.tSolta < 180) {   // solta: murcha e roda em órbita (o bico gira e a pipa anda junto, desenhando um O)
+        const w = .058 * (p.tSolta < 120 ? 1 : 1 - (p.tSolta - 120) / 60);
+        p.a += p.giro * w * dt;
+        avx = Math.sin(p.a) * VP * .5; avy = -Math.cos(p.a) * VP * .5 + .14 * p.U;
+        env = 0; p.estado = "roda"; laco = .22;
+      } else { p.a += angDif(p.a, Math.sin(mundo.t * 1.3) * .12) * .02 * dt; avy = .06 * p.U; env = 0; p.estado = "parada"; }
       p.vis *= .9;
     }
-    p.env += (env - p.env) * .18 * dt;
-    p.vx += (avx - p.vx) * .1 * dt; p.vy += (avy - p.vy) * .1 * dt;
+    p.env += (env - p.env) * (env > p.env ? .35 : .2) * dt;   // enche na hora que puxa, murcha quando solta
+    p.folga = (p.folga || 0) + ((env ? 0 : 1) - (p.folga || 0)) * .08 * dt;
+    p.vx += (avx - p.vx) * laco * dt; p.vy += (avy - p.vy) * laco * dt;
     p.x += p.vx * dt; p.y += p.vy * dt;
     const dx = p.x - p.ancora.x, dy = p.y - p.ancora.y, d = Math.hypot(dx, dy) || 1;
     if (d > p.lmax) {
@@ -141,7 +146,7 @@
       return pts;
     }
     const d = Math.hypot(bx - ax, by - ay), folga = Math.max(0, p.lmax - d);
-    const sag = Math.min(folga * .5, 170 * p.U) + 6 * p.U;
+    const sag = Math.min(folga * .5, 170 * p.U) + (6 + 46 * (p.folga || 0)) * p.U * Math.min(1, d / (300 * p.U));
     const cx = (ax + bx) / 2 + (bx > ax ? sag * .25 : -sag * .25), cy = (ay + by) / 2 + sag;
     const pts = [];
     for (let i = 0; i <= n; i++) { const t = i / n, u = 1 - t; pts.push({ x: u * u * ax + 2 * u * t * cx + t * t * bx, y: u * u * ay + 2 * u * t * cy + t * t * by }); }
@@ -216,10 +221,11 @@
   }
 
   function desenhaPipa(g, p, alpha) {
-    desenhaRabiola(g, p.rab, (p.grande ? 6 : 4) * p.U * Math.max(.6, p.esc));
+    desenhaRabiola(g, p.rab, (p.grande ? 4 : 2.6) * p.U * Math.max(.6, p.esc));
     const s = p.s * p.esc;
     g.save(); g.translate(p.x, p.y); g.rotate(p.a + p.vis);
-    g.scale(.55 + .45 * p.env, .9 + .1 * p.env);
+    const treme = (1 - p.env) * Math.sin(performance.now() * .03 + p.x * .05) * .06;
+    g.scale(.72 + .28 * p.env + treme, .9 + .1 * p.env);
     if (alpha != null) g.globalAlpha = alpha;
     if (p.spr && p.spr.complete && p.spr.naturalWidth) g.drawImage(p.spr, -s / 2, -s / 2, s, s);
     g.restore(); g.globalAlpha = 1;
@@ -487,7 +493,7 @@
 
     function nasce() {
       const o = O();
-      eu = novaPipa({ x: o.x, y: o.y - 30, a: 0, s: 70 * U, U, vp: Math.max(2.8, W * .0036), ancora: o, lmax: H * .7, lmin: H * .35, lmaxMax: H * 1.1, spr: SK[(Math.random() * SK.length) | 0], agr: 1.1, semente: Math.random() * 9 });
+      eu = novaPipa({ x: o.x, y: o.y - 30, a: 0, s: 70 * U, U, vp: Math.max(2.2, W * .0026), ancora: o, lmax: H * .7, lmin: H * .35, lmaxMax: H * 1.1, spr: SK[(Math.random() * SK.length) | 0], agr: 1.1, semente: Math.random() * 9 });
       eu.ia = "puxa"; eu.tIA = 40;
     }
     nasce();
@@ -538,7 +544,7 @@
 
     function novoRival() {
       const lado = Math.random() < .5 ? -1 : 1, base = { x: lado < 0 ? W * .03 : W * .97, y: H + 6 };
-      rival = novaPipa({ x: base.x - lado * 40, y: H * .3, a: lado * -.6, s: 70 * U, U, vp: Math.max(3, W * .0042), ancora: base, lmax: H * .95, lmin: H * .5, lmaxMax: H * 1.2, spr: RIV[(Math.random() * RIV.length) | 0], agr: .8, semente: Math.random() * 9 });
+      rival = novaPipa({ x: base.x - lado * 40, y: H * .3, a: lado * -.6, s: 70 * U, U, vp: Math.max(2.2, W * .003), ancora: base, lmax: H * .95, lmin: H * .5, lmaxMax: H * 1.2, spr: RIV[(Math.random() * RIV.length) | 0], agr: .8, semente: Math.random() * 9 });
       rival.entrando = 70;
     }
 
@@ -696,12 +702,12 @@
     const nuvens = Array.from({ length: 6 }, () => ({ x: Math.random() * W, y: 40 + Math.random() * HOR * .55, s: (.6 + Math.random() * .8) * U, v: .12 + Math.random() * .2 }));
 
     function nasceEu() {
-      eu = novaPipa({ x: MAO.x, y: MAO.y - 40 * U, a: 0, s: 78 * U, U, vp: W * .0042, ancora: MAO, lmax: H * .8, lmin: H * .42, lmaxMax: H * 1.25, spr: MINHA, nRab: 18, segRab: 10, semente: 1 });
+      eu = novaPipa({ x: MAO.x, y: MAO.y - 40 * U, a: 0, s: 78 * U, U, vp: W * .0031, ancora: MAO, lmax: H * .8, lmin: H * .42, lmaxMax: H * 1.25, spr: MINHA, nRab: 18, segRab: 10, semente: 1 });
       eu.subindo = 40;
     }
     function nasceBot(pipao) {
       const base = BASES[(Math.random() * BASES.length) | 0];
-      const b = novaPipa({ x: base.x, y: base.y - 50 * U, a: (base.x < W / 2 ? .5 : -.5), s: (pipao ? 120 : 66 + Math.random() * 12) * U, U, vp: W * (pipao ? .0032 : .004), ancora: base, lmax: H * .8, lmin: H * .4, lmaxMax: H * 1.1, spr: pipao ? BOSS : SPR[(Math.random() * SPR.length) | 0], agr: pipao ? .6 : .7 + Math.random() * .6, semente: Math.random() * 9, nRab: pipao ? 22 : 14, segRab: pipao ? 13 : 9 });
+      const b = novaPipa({ x: base.x, y: base.y - 50 * U, a: (base.x < W / 2 ? .5 : -.5), s: (pipao ? 120 : 66 + Math.random() * 12) * U, U, vp: W * (pipao ? .0024 : .003), ancora: base, lmax: H * .8, lmin: H * .4, lmaxMax: H * 1.1, spr: pipao ? BOSS : SPR[(Math.random() * SPR.length) | 0], agr: pipao ? .6 : .7 + Math.random() * .6, semente: Math.random() * 9, nRab: pipao ? 22 : 14, segRab: pipao ? 13 : 9 });
       b.pipao = pipao; b.grande = pipao; b.vida = pipao ? 2.6 : 1; b.entrando = 50;
       bots.push(b);
     }
