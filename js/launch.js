@@ -286,6 +286,8 @@
   }
 
   /* ---------- HERO ---------- */
+  const logoHero = $(".hv-logo");
+  logoHero?.addEventListener("animationend", () => { logoHero.classList.remove("slam"); logoHero.classList.add("pronta"); });
   const hero = $("#heroVideo");
   if (hero) {
     if (leve) hero.poster = hero.dataset.pm;

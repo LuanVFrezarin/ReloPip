@@ -32,7 +32,7 @@ html{scroll-padding-top:96px}
 .corner-vid.portrait{aspect-ratio:9/16}
 
 /* REELS: logo depois do hero, sobe em cima da borda */
-.reels-sec{padding:6px 0 30px;position:relative;z-index:3;overflow:hidden}
+.reels-sec{padding:6px 0 30px;position:relative;z-index:50;overflow:hidden}
 .reels-track{display:flex;gap:14px;width:max-content;animation:rolaEsq 46s linear infinite;padding:20px 0 26px}
 .reels-track:hover{animation-play-state:paused}
 .reel{position:relative;width:170px;aspect-ratio:9/16;border-radius:20px;overflow:hidden;border:3px solid #181c2e;box-shadow:0 22px 50px rgba(0,0,0,.5);background:#0b0e1c;flex:0 0 auto;transition:transform .3s}
@@ -267,3 +267,9 @@ html{scroll-padding-top:96px}
   .pv-dica{font-size:12px;bottom:calc(70px + env(safe-area-inset-bottom))}
 }
 @media (prefers-reduced-motion:reduce){.reels-track,.pipas-track,.gal-track,.car-row img,.pipas-track img,.m2-ico{animation:none}.slam{animation:none}.pipa-viva,.pv-reel{display:none}}
+
+/* vídeos ficam na frente da pipa viva, pra não embolar com as pipas dos clipes */
+.gestos,.modos2,.trailer-card,.hv-corner{position:relative;z-index:50}
+.hv-corner{position:absolute}
+/* logo nítida no celular: sem filtro pesado depois da entrada */
+@media (max-width:680px){.hv-logo{filter:none}}
