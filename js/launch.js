@@ -81,7 +81,7 @@
     const desb = p.puxa && p.da, VP = p.vp;
     const clique = (p.puxa || desb) && !p.ant; p.ant = p.puxa || desb;
     if (clique) { p.giro = -p.giro; p.tSolta = 0; }
-    let avx = mundo.vento * .25 * p.U, avy = 0, env = 1, laco = .1;
+    let avx = mundo.vento * .25 * p.U, avy = 0, env = 0, laco = .1;
     if (desb) {
       p.fase += dt / 27;
       const lado = (Math.floor(p.fase) % 2) ? 1 : -1;
@@ -97,19 +97,19 @@
     } else if (p.da) {
       avx = Math.sin(p.a) * VP * .45; avy = -Math.cos(p.a) * VP * .45 + .12 * p.U;
       p.lmax = Math.min(p.lmaxMax, p.lmax + 2.2 * p.U * dt);
-      p.vis *= .85; p.estado = "da"; env = 0;
+      p.vis *= .85; p.estado = "da"; env = 1;
     } else {
       p.tPuxa = 0; p.tSolta += dt;
       if (p.tSolta < 180) {   // solta: murcha e roda em órbita (o bico gira e a pipa anda junto, desenhando um O)
         const w = .058 * (p.tSolta < 120 ? 1 : 1 - (p.tSolta - 120) / 60);
         p.a += p.giro * w * dt;
         avx = Math.sin(p.a) * VP * .5; avy = -Math.cos(p.a) * VP * .5 + .14 * p.U;
-        env = 0; p.estado = "roda"; laco = .22;
-      } else { p.a += angDif(p.a, Math.sin(mundo.t * 1.3) * .12) * .02 * dt; avy = .06 * p.U; env = 0; p.estado = "parada"; }
+        env = 1; p.estado = "roda"; laco = .22;
+      } else { p.a += angDif(p.a, Math.sin(mundo.t * 1.3) * .12) * .02 * dt; avy = .06 * p.U; env = 1; p.estado = "parada"; }
       p.vis *= .9;
     }
-    p.env += (env - p.env) * (env > p.env ? .35 : .2) * dt;   // enche na hora que puxa, murcha quando solta
-    p.folga = (p.folga || 0) + ((env ? 0 : 1) - (p.folga || 0)) * .08 * dt;
+    p.env += (env - p.env) * (env < p.env ? .35 : .2) * dt;   // murcha na hora que puxa, volta ao normal quando solta
+    p.folga = (p.folga || 0) + ((p.puxa ? 0 : 1) - (p.folga || 0)) * .08 * dt;
     p.vx += (avx - p.vx) * laco * dt; p.vy += (avy - p.vy) * laco * dt;
     p.x += p.vx * dt; p.y += p.vy * dt;
     const dx = p.x - p.ancora.x, dy = p.y - p.ancora.y, d = Math.hypot(dx, dy) || 1;
@@ -117,6 +117,10 @@
       const nx = dx / d, ny = dy / d;
       p.x = p.ancora.x + nx * p.lmax; p.y = p.ancora.y + ny * p.lmax;
       const vr = p.vx * nx + p.vy * ny; if (vr > 0) { p.vx -= vr * nx; p.vy -= vr * ny; }
+    } else if (p.dmin && d < p.dmin) {   // a linha nunca recolhe até a mão: a pipa desliza pelo arco
+      const nx = dx / d, ny = dy / d;
+      p.x = p.ancora.x + nx * p.dmin; p.y = p.ancora.y + ny * p.dmin;
+      const vr = p.vx * nx + p.vy * ny; if (vr < 0) { p.vx -= vr * nx; p.vy -= vr * ny; }
     }
     restringe(p, mundo);
   }
@@ -224,8 +228,7 @@
     desenhaRabiola(g, p.rab, (p.grande ? 4 : 2.6) * p.U * Math.max(.6, p.esc));
     const s = p.s * p.esc;
     g.save(); g.translate(p.x, p.y); g.rotate(p.a + p.vis);
-    const treme = (1 - p.env) * Math.sin(performance.now() * .03 + p.x * .05) * .06;
-    g.scale(.72 + .28 * p.env + treme, .9 + .1 * p.env);
+    g.scale(.7 + .3 * p.env, .94 + .06 * p.env);
     if (alpha != null) g.globalAlpha = alpha;
     if (p.spr && p.spr.complete && p.spr.naturalWidth) g.drawImage(p.spr, -s / 2, -s / 2, s, s);
     g.restore(); g.globalAlpha = 1;
@@ -558,7 +561,7 @@
       const deve = perto || lb;
       if (deve !== oculta) { oculta = deve; c.classList.toggle("some", oculta); reel.classList.toggle("some", oculta); }
       g.clearRect(0, 0, W, H);
-      if (oculta) { requestAnimationFrame(quadro); return; }
+      if (oculta) { dica.classList.remove("show"); requestAnimationFrame(quadro); return; }
       const o = O(), cor = cssLinha();
 
       if (!eu && (renasce -= dt) <= 0) nasce();
@@ -666,7 +669,7 @@
     const HOR = H * (retrato ? .7 : .72);                 // linha do horizonte
     const CW = (retrato ? 330 : 300) * U * (retrato ? .8 : 1), CH = CW * 446 / 520;   // personagem de costas
     const MAO = { x: W / 2 + CW * .08, y: H - CH * .92 };
-    const mundo = { W, H, teto: (retrato ? 120 : 46) * U, chao: HOR - 24 * U, alto: HOR * .58, vento: .3, t: 0, prof: y => .42 + .5 * Math.max(0, Math.min(1, (y - 40) / (HOR - 40))) };
+    const mundo = { W, H, teto: (retrato ? 120 : 46) * U, chao: HOR * .8, alto: HOR * .5, vento: .3, t: 0, prof: y => .6 + .22 * Math.max(0, Math.min(1, (y - 40) / (HOR - 40))) };
     const BASES = [.06, .94, .2, .8, .33, .67].map(f => ({ x: W * f, y: HOR + 6 * U + Math.abs(f - .5) * 26 * U }));
     let rec = Number(guarda.ler(REC, 0)) || 0, rodando = false, visivel = false, laco = false, ult = 0;
     let pts = 0, fim = 0, eu = null, bots = [], engate = null, mandadas = [], aparadas = [], restos = [], sparks = [], textos = [], cortes = [], renasce = 0, proxBot = 0, relosTotal = 0;
@@ -704,12 +707,12 @@
     const nuvens = Array.from({ length: 6 }, () => ({ x: Math.random() * W, y: 40 + Math.random() * HOR * .55, s: (.6 + Math.random() * .8) * U, v: .12 + Math.random() * .2 }));
 
     function nasceEu() {
-      eu = novaPipa({ x: MAO.x, y: MAO.y - 40 * U, a: 0, s: 78 * U, U, vp: W * .0031, ancora: MAO, lmax: H * .8, lmin: H * .42, lmaxMax: H * 1.25, spr: MINHA, nRab: 18, segRab: 10, semente: 1 });
+      eu = novaPipa({ x: MAO.x, y: MAO.y - H * .52, a: 0, s: 56 * U, U, vp: W * .0023, ancora: MAO, dmin: H * .5, lmax: H * .85, lmin: H * .6, lmaxMax: H * 1.3, spr: MINHA, nRab: 18, segRab: 10, semente: 1 });
       eu.subindo = 40;
     }
     function nasceBot(pipao) {
       const base = BASES[(Math.random() * BASES.length) | 0];
-      const b = novaPipa({ x: base.x, y: base.y - 50 * U, a: (base.x < W / 2 ? .5 : -.5), s: (pipao ? 120 : 66 + Math.random() * 12) * U, U, vp: W * (pipao ? .0024 : .003), ancora: base, lmax: H * .8, lmin: H * .4, lmaxMax: H * 1.1, spr: pipao ? BOSS : SPR[(Math.random() * SPR.length) | 0], agr: pipao ? .6 : .7 + Math.random() * .6, semente: Math.random() * 9, nRab: pipao ? 22 : 14, segRab: pipao ? 13 : 9 });
+      const b = novaPipa({ x: base.x, y: base.y - 50 * U, a: (base.x < W / 2 ? .5 : -.5), s: (pipao ? 86 : 46 + Math.random() * 8) * U, U, vp: W * (pipao ? .0019 : .0023), ancora: base, dmin: H * .32, lmax: H * .8, lmin: H * .5, lmaxMax: H * 1.1, spr: pipao ? BOSS : SPR[(Math.random() * SPR.length) | 0], agr: pipao ? .6 : .7 + Math.random() * .6, semente: Math.random() * 9, nRab: pipao ? 22 : 14, segRab: pipao ? 13 : 9 });
       b.pipao = pipao; b.grande = pipao; b.vida = pipao ? 2.6 : 1; b.entrando = 50;
       bots.push(b);
     }
