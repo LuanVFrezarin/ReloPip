@@ -46,8 +46,9 @@
   <!-- PIPA VIVA: a linha sai da carretilha no pé da tela -->
   <canvas class="pipa-viva" id="pipaViva" aria-hidden="true"></canvas>
   <button class="pv-reel" id="pvReel" type="button" aria-label="Soltar a pipa"><img src="media/carretilhas/n_relo_amarela.webp" alt="" draggable="false" /></button>
-  <div class="pv-dica" id="pvDica" aria-hidden="true">Toca na pipa pra <b>desbicar</b> · na carretilha pra <b>soltar</b></div>
+  <div class="pv-dica" id="pvDica" aria-hidden="true">Toca na pipa pra <b>desbicar</b> · arrasta pra levar · carretilha <b>solta</b></div>
   <div class="pv-placar" id="pvPlacar" aria-live="polite"></div>
+  <div class="aviso-jogo pv-aviso" id="pvAviso" aria-hidden="true"><b></b><span></span></div>
 
   <div class="topbar" id="topbar">
     <div class="ticker"><div class="ticker-track" id="tickerTrack"></div></div>
@@ -65,7 +66,6 @@
         <a href="#modos">Modos</a>
         <a href="#desafio">Dá um relo</a>
         <a href="#arsenal">Arsenal</a>
-        <a href="pipoints/">Pipoints</a>
       </nav>
       <div class="nav-actions">
         <a href="#baixar" class="btn btn-primary btn-sm">Baixar grátis</a>
@@ -93,7 +93,7 @@
           <h1 class="sr-only">RELO — o jogo de pipa do Brasil</h1>
           <img class="hero-logo hv-logo slam" src="media/logo.webp" alt="RELO" />
           <p class="hero-sub reveal">Da laje pro céu.</p>
-          <p class="lead reveal">Sobe a pipa, cruza com o rival e corta. Apara a mandada, monta sua coleção e faz o nome no céu. Online com a galera ou offline contra até 30 bots.</p>
+          <p class="lead reveal">Cruza com o rival e corta. Apara a mandada e faz o nome no céu. Online com a galera ou offline contra até 30 bots.</p>
           <div class="hero-actions reveal">
             <a href="#baixar" class="btn btn-primary btn-lg magnetic"><svg><use href="#i-bolt"/></svg> Jogar agora</a>
             <button class="btn btn-ghost btn-lg magnetic" id="heroTrailer" type="button"><svg><use href="#i-play"/></svg> Ver o trailer</button>
@@ -102,13 +102,24 @@
       </div>
     </section>
 
-    <!-- REELS: o céu passando -->
-    <section class="reels-sec" aria-label="Cenas do jogo">
-      <div class="reels-track" id="reelsTrack"></div>
+    <!-- A ARTE DO RELO -->
+    <section class="sec sec-cola" id="arte">
+      <div class="container">
+        <div class="sec-head reveal">
+          <span class="eyebrow">A arte do relo</span>
+          <h2>Quatro gestos. Um céu inteiro.</h2>
+        </div>
+      </div>
+      <div class="gestos" id="gestos">
+        <article class="gesto reveal"><video data-lazy="media/corte_v.mp4" poster="media/corte_v.jpg" muted loop playsinline></video><div class="g-txt"><b>01</b><h3>Corta</h3><p>Cruza na linha do rival e segura o atrito. O dano sobe até a dele ceder.</p></div></article>
+        <article class="gesto reveal"><video data-lazy="media/aparo_v.mp4" poster="media/aparo_v.jpg" muted loop playsinline></video><div class="g-txt"><b>02</b><h3>Apara</h3><p>Pipa cortada virou mandada. Encosta a linha, ela gruda e desce até sua mão.</p></div></article>
+        <article class="gesto reveal"><video data-lazy="media/linha_v.mp4" poster="media/linha_v.jpg" muted loop playsinline></video><div class="g-txt"><b>03</b><h3>Dá linha</h3><p>Solta pra ganhar altura e velocidade, puxa pra mudar o ângulo e atacar.</p></div></article>
+        <article class="gesto reveal"><video data-lazy="media/corre_v.mp4" poster="media/corre_v.jpg" muted loop playsinline></video><div class="g-txt"><b>04</b><h3>Corre</h3><p>Desce a laje, sobe a ladeira. O morro inteiro é seu atrás do melhor céu.</p></div></article>
+      </div>
     </section>
 
     <!-- TRAILER + NÚMEROS -->
-    <section class="sec sec-cola" id="trailer">
+    <section class="sec" id="trailer">
       <div class="container vitrine">
         <div class="trailer-card reveal" id="trailerBox" role="button" tabindex="0" aria-label="Assistir ao trailer com som">
           <video id="trailerVideo" poster="media/trailer.jpg" muted loop playsinline preload="none"></video>
@@ -126,22 +137,6 @@
             <div class="num"><b data-n="10">10</b><span>linhas</span></div>
           </div>
         </div>
-      </div>
-    </section>
-
-    <!-- A ARTE DO RELO -->
-    <section class="sec" id="arte">
-      <div class="container">
-        <div class="sec-head reveal">
-          <span class="eyebrow">A arte do relo</span>
-          <h2>Quatro gestos. Um céu inteiro.</h2>
-        </div>
-      </div>
-      <div class="gestos" id="gestos">
-        <article class="gesto reveal"><video data-lazy="media/corte_v.mp4" poster="media/corte_v.jpg" muted loop playsinline></video><div class="g-txt"><b>01</b><h3>Corta</h3><p>Cruza na linha do rival e segura o atrito. O dano sobe até a dele ceder.</p></div></article>
-        <article class="gesto reveal"><video data-lazy="media/aparo_v.mp4" poster="media/aparo_v.jpg" muted loop playsinline></video><div class="g-txt"><b>02</b><h3>Apara</h3><p>Pipa cortada virou mandada. Encosta a linha, ela gruda e desce até sua mão.</p></div></article>
-        <article class="gesto reveal"><video data-lazy="media/linha_v.mp4" poster="media/linha_v.jpg" muted loop playsinline></video><div class="g-txt"><b>03</b><h3>Dá linha</h3><p>Solta pra ganhar altura e velocidade, puxa pra mudar o ângulo e atacar.</p></div></article>
-        <article class="gesto reveal"><video data-lazy="media/corre_v.mp4" poster="media/corre_v.jpg" muted loop playsinline></video><div class="g-txt"><b>04</b><h3>Corre</h3><p>Desce a laje, sobe a ladeira. O morro inteiro é seu atrás do melhor céu.</p></div></article>
       </div>
     </section>
 
@@ -216,14 +211,20 @@
           <h2>Dá um relo aqui mesmo.</h2>
         </div>
         <div class="jogo reveal" id="jogoBox">
-          <canvas id="jogoCanvas" width="1280" height="620"></canvas>
-          <div class="jogo-hud"><span>Relos <b id="jgPts">0</b></span><span>Tempo <b id="jgTempo">30</b></span><span>Recorde <b id="jgRec">0</b></span></div>
-          <div class="jogo-vida" aria-hidden="true"><i id="jgVida"></i></div>
-          <div class="jogo-grito" id="jgGrito"></div>
-          <div class="jogo-ini" id="jgIni">
-            <h3 id="jgTit">Céu liberado</h3>
-            <p id="jgMsg">Arrasta a pipa e cruza na linha dos rivais. Toca pra desbicar. Mandada caindo? Encosta a linha e apara.</p>
-            <button class="btn btn-primary btn-lg" id="jgBtn" type="button"><svg><use href="#i-kite"/></svg> Subir pipa</button>
+          <div class="jogo-tela">
+            <canvas id="jogoCanvas" width="1280" height="640"></canvas>
+            <div class="jogo-hud"><span>Relos <b id="jgPts">0</b></span><span>Tempo <b id="jgTempo">45</b></span><span>Recorde <b id="jgRec">0</b></span></div>
+            <div class="aviso-jogo" id="jgAviso"><b></b><span></span></div>
+            <div class="jogo-ini" id="jgIni">
+              <h3 id="jgTit">Céu liberado</h3>
+              <p id="jgMsg">Igual no jogo: <b>segura</b> pra puxar (a pipa vai pra onde o bico aponta), <b>solta</b> que ela roda, <b>dá linha</b> pra descarregar e aperta os dois pra <b>desbicar</b>.</p>
+              <button class="btn btn-primary btn-lg" id="jgBtn" type="button"><svg><use href="#i-kite"/></svg> Subir pipa</button>
+            </div>
+          </div>
+          <div class="jogo-cmd" id="jgCmd">
+            <button type="button" class="cmd" data-cmd="da"><b>Dá linha</b><small>botão direito · S</small></button>
+            <button type="button" class="cmd" data-cmd="desb"><b>Desbica</b><small>os dois · espaço</small></button>
+            <button type="button" class="cmd puxa" data-cmd="puxa"><b>Puxa</b><small>segura · W</small></button>
           </div>
         </div>
       </div>
@@ -243,18 +244,10 @@
       <div class="pipas-mq" aria-hidden="true"><div class="pipas-track" id="pipasTrack"></div></div>
     </section>
 
-    <!-- GALERIA + PIPOINTS -->
+    <!-- GALERIA -->
     <section class="sec galeria-sec" id="galeria">
       <div class="gal-track" id="galTrack"></div>
       <div class="container">
-        <div class="pp-cta reveal">
-          <div>
-            <span class="eyebrow">Pipoints</span>
-            <h2>A moeda do céu.</h2>
-            <p>Pacotes a partir de R$ 4,90 pra pegar skin, linha, carretilha e combo. Cai na mesma conta do jogo.</p>
-          </div>
-          <a class="btn btn-premium btn-lg magnetic" href="pipoints/"><svg><use href="#i-star"/></svg> Ver pacotes</a>
-        </div>
       </div>
     </section>
 
@@ -276,6 +269,11 @@
         </div>
       </div>
     </section>
+    <!-- REELS: o céu passando -->
+    <section class="reels-sec" aria-label="Cenas do jogo">
+      <div class="reels-track" id="reelsTrack"></div>
+    </section>
+
   </main>
 
   <footer class="footer">
@@ -285,7 +283,6 @@
       <div class="social">
         <a href="#baixar" aria-label="Baixar"><svg><use href="#i-bolt"/></svg></a>
         <a href="#trailer" aria-label="Trailer"><svg><use href="#i-play"/></svg></a>
-        <a href="pipoints/" aria-label="Pipoints"><svg><use href="#i-star"/></svg></a>
       </div>
     </div>
     <nav class="container" aria-label="Documentos legais" style="display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:center;padding:18px 0 4px;font:600 15px Rajdhani,sans-serif">
