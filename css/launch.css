@@ -273,3 +273,8 @@ html{scroll-padding-top:96px}
 .hv-corner{position:absolute}
 /* logo nítida no celular: sem filtro pesado depois da entrada */
 @media (max-width:680px){.hv-logo{filter:none}}
+
+/* vitrine logo abaixo da primeira tela */
+.vitrine-sec{position:relative;z-index:50;overflow:hidden;padding:4px 0 18px}
+.vitrine-sec .pipas-mq{margin:0 0 18px}
+.vitrine-sec .gal-track{margin-bottom:0}

@@ -61,11 +61,11 @@
       </a>
       <nav class="nav-links" id="navLinks">
         <a href="#trailer">Trailer</a>
-        <a href="#arte">Como joga</a>
         <a href="#casa">Casa Relo</a>
-        <a href="#modos">Modos</a>
         <a href="#desafio">Dá um relo</a>
+        <a href="#modos">Modos</a>
         <a href="#arsenal">Arsenal</a>
+        <a href="#arte">Como joga</a>
       </nav>
       <div class="nav-actions">
         <a href="#baixar" class="btn btn-primary btn-sm">Baixar grátis</a>
@@ -102,20 +102,10 @@
       </div>
     </section>
 
-    <!-- A ARTE DO RELO -->
-    <section class="sec sec-cola" id="arte">
-      <div class="container">
-        <div class="sec-head reveal">
-          <span class="eyebrow">A arte do relo</span>
-          <h2>Quatro gestos. Um céu inteiro.</h2>
-        </div>
-      </div>
-      <div class="gestos" id="gestos">
-        <article class="gesto reveal"><video data-lazy="media/corte_v.mp4" poster="media/corte_v.jpg" muted loop playsinline></video><div class="g-txt"><b>01</b><h3>Corta</h3><p>Cruza na linha do rival e segura o atrito. O dano sobe até a dele ceder.</p></div></article>
-        <article class="gesto reveal"><video data-lazy="media/aparo_v.mp4" poster="media/aparo_v.jpg" muted loop playsinline></video><div class="g-txt"><b>02</b><h3>Apara</h3><p>Pipa cortada virou mandada. Encosta a linha, ela gruda e desce até sua mão.</p></div></article>
-        <article class="gesto reveal"><video data-lazy="media/linha_v.mp4" poster="media/linha_v.jpg" muted loop playsinline></video><div class="g-txt"><b>03</b><h3>Dá linha</h3><p>Solta pra ganhar altura e velocidade, puxa pra mudar o ângulo e atacar.</p></div></article>
-        <article class="gesto reveal"><video data-lazy="media/corre_v.mp4" poster="media/corre_v.jpg" muted loop playsinline></video><div class="g-txt"><b>04</b><h3>Corre</h3><p>Desce a laje, sobe a ladeira. O morro inteiro é seu atrás do melhor céu.</p></div></article>
-      </div>
+    <!-- VITRINE: pipas e cenas do jogo -->
+    <section class="vitrine-sec" id="galeria" aria-label="Pipas e cenas do jogo">
+      <div class="pipas-mq" aria-hidden="true"><div class="pipas-track" id="pipasTrack"></div></div>
+      <div class="gal-track" id="galTrack"></div>
     </section>
 
     <!-- TRAILER + NÚMEROS -->
@@ -176,33 +166,6 @@
       </div>
     </section>
 
-    <!-- MODOS -->
-    <section class="sec modos-sec" id="modos">
-      <div class="container">
-        <div class="sec-head reveal">
-          <span class="eyebrow">Novidades no céu</span>
-          <h2>Escolhe a sua guerra.</h2>
-        </div>
-      </div>
-      <div class="modos2" id="modos2">
-        <article class="modo2 active" data-m="classico" data-ceu="dia">
-          <video data-lazy="media/classico_v.mp4" poster="media/classico_v.jpg" muted loop playsinline></video>
-          <div class="m2-info"><span class="modo-tag">Dia na favela</span><h3>Clássico</h3><p>O relo de raiz: corta, apara, recolhe e faz a coleção crescer.</p><ul><li>Corte</li><li>Aparo</li><li>Réu</li><li>Online e offline</li></ul></div>
-          <img class="m2-ico" src="media/pipas/pipa1_aguia.webp" alt="" loading="lazy" />
-        </article>
-        <article class="modo2" data-m="noturno" data-ceu="noite">
-          <video data-lazy="media/noturno_v.mp4" poster="media/noturno_v.jpg" muted loop playsinline></video>
-          <div class="m2-info"><span class="modo-tag novo">Novo</span><h3>Festival Noturno</h3><p>Céu fechado, raias no ar e linha acesa cortando o escuro.</p><ul><li>Só raias</li><li>Relo contínuo</li><li>Sem aparo</li></ul></div>
-          <img class="m2-ico" src="media/pipas/pipa1_estrela.webp" alt="" loading="lazy" />
-        </article>
-        <article class="modo2" data-m="pipao" data-ceu="dia">
-          <video data-lazy="media/pipao_v.mp4" poster="media/pipao_v.jpg" muted loop playsinline></video>
-          <div class="m2-info"><span class="modo-tag novo">Novo</span><h3>Modo Pipão</h3><p>Pipa gigante e Rabiolão automático. O morro inteiro vê quem chegou.</p><ul><li>Rabiolão</li><li>Xepa permanente</li><li>Até 15 bots</li></ul></div>
-          <img class="m2-ico" src="media/pipas/pipao_laminado.webp" alt="" loading="lazy" />
-        </article>
-      </div>
-    </section>
-
     <!-- DESAFIO -->
     <section class="sec desafio-sec" id="desafio">
       <div class="container">
@@ -230,6 +193,33 @@
       </div>
     </section>
 
+    <!-- MODOS -->
+    <section class="sec modos-sec" id="modos">
+      <div class="container">
+        <div class="sec-head reveal">
+          <span class="eyebrow">Novidades no céu</span>
+          <h2>Escolhe a sua guerra.</h2>
+        </div>
+      </div>
+      <div class="modos2" id="modos2">
+        <article class="modo2 active" data-m="classico" data-ceu="dia">
+          <video data-lazy="media/classico_v.mp4" poster="media/classico_v.jpg" muted loop playsinline></video>
+          <div class="m2-info"><span class="modo-tag">Dia na favela</span><h3>Clássico</h3><p>O relo de raiz: corta, apara, recolhe e faz a coleção crescer.</p><ul><li>Corte</li><li>Aparo</li><li>Réu</li><li>Online e offline</li></ul></div>
+          <img class="m2-ico" src="media/pipas/pipa1_aguia.webp" alt="" loading="lazy" />
+        </article>
+        <article class="modo2" data-m="noturno" data-ceu="noite">
+          <video data-lazy="media/noturno_v.mp4" poster="media/noturno_v.jpg" muted loop playsinline></video>
+          <div class="m2-info"><span class="modo-tag novo">Novo</span><h3>Festival Noturno</h3><p>Céu fechado, raias no ar e linha acesa cortando o escuro.</p><ul><li>Só raias</li><li>Relo contínuo</li><li>Sem aparo</li></ul></div>
+          <img class="m2-ico" src="media/pipas/pipa1_estrela.webp" alt="" loading="lazy" />
+        </article>
+        <article class="modo2" data-m="pipao" data-ceu="dia">
+          <video data-lazy="media/pipao_v.mp4" poster="media/pipao_v.jpg" muted loop playsinline></video>
+          <div class="m2-info"><span class="modo-tag novo">Novo</span><h3>Modo Pipão</h3><p>Pipa gigante e Rabiolão automático. O morro inteiro vê quem chegou.</p><ul><li>Rabiolão</li><li>Xepa permanente</li><li>Até 15 bots</li></ul></div>
+          <img class="m2-ico" src="media/pipas/pipao_laminado.webp" alt="" loading="lazy" />
+        </article>
+      </div>
+    </section>
+
     <!-- ARSENAL -->
     <section class="sec" id="arsenal">
       <div class="container">
@@ -241,13 +231,21 @@
         <div class="ars-linhas reveal" id="arsLinhas"></div>
         <div class="car-row reveal" id="arsCar"></div>
       </div>
-      <div class="pipas-mq" aria-hidden="true"><div class="pipas-track" id="pipasTrack"></div></div>
     </section>
 
-    <!-- GALERIA -->
-    <section class="sec galeria-sec" id="galeria">
-      <div class="gal-track" id="galTrack"></div>
+    <!-- A ARTE DO RELO -->
+    <section class="sec" id="arte">
       <div class="container">
+        <div class="sec-head reveal">
+          <span class="eyebrow">A arte do relo</span>
+          <h2>Quatro gestos. Um céu inteiro.</h2>
+        </div>
+      </div>
+      <div class="gestos" id="gestos">
+        <article class="gesto reveal"><video data-lazy="media/corte_v.mp4" poster="media/corte_v.jpg" muted loop playsinline></video><div class="g-txt"><b>01</b><h3>Corta</h3><p>Cruza na linha do rival e segura o atrito. O dano sobe até a dele ceder.</p></div></article>
+        <article class="gesto reveal"><video data-lazy="media/aparo_v.mp4" poster="media/aparo_v.jpg" muted loop playsinline></video><div class="g-txt"><b>02</b><h3>Apara</h3><p>Pipa cortada virou mandada. Encosta a linha, ela gruda e desce até sua mão.</p></div></article>
+        <article class="gesto reveal"><video data-lazy="media/linha_v.mp4" poster="media/linha_v.jpg" muted loop playsinline></video><div class="g-txt"><b>03</b><h3>Dá linha</h3><p>Solta pra ganhar altura e velocidade, puxa pra mudar o ângulo e atacar.</p></div></article>
+        <article class="gesto reveal"><video data-lazy="media/corre_v.mp4" poster="media/corre_v.jpg" muted loop playsinline></video><div class="g-txt"><b>04</b><h3>Corre</h3><p>Desce a laje, sobe a ladeira. O morro inteiro é seu atrás do melhor céu.</p></div></article>
       </div>
     </section>
 

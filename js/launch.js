@@ -38,7 +38,8 @@
      ===================================================================== */
   const TAU = Math.PI * 2;
   const angDif = (a, b) => { let d = (b - a) % TAU; if (d > Math.PI) d -= TAU; if (d < -Math.PI) d += TAU; return d; };
-  const img = n => { const i = new Image(); i.src = M + "pipas/" + n + ".webp"; return i; };
+  // cafifa (cai-cai) e raia não têm rabiola no jogo (temRabiola: 0)
+  const img = n => { const i = new Image(); i.src = M + "pipas/" + n + ".webp"; i.semRab = /^(cafifa|raia)/.test(n); return i; };
   const cruza = (a, b, c, d) => {
     const s = (b.x - a.x) * (d.y - c.y) - (b.y - a.y) * (d.x - c.x); if (!s) return null;
     const t = ((c.x - a.x) * (d.y - c.y) - (c.y - a.y) * (d.x - c.x)) / s, u = ((c.x - a.x) * (b.y - a.y) - (c.y - a.y) * (b.x - a.x)) / s;
@@ -193,6 +194,7 @@
     const tx = (A.x * puxaB + B.x * puxaA) / (puxaA + puxaB), ty = baixo + (base - baixo) * .2;
     e.pt.x += (tx - e.pt.x) * .025 * dt; e.pt.y += (ty - e.pt.y) * .025 * dt;
     [A, B].forEach(p => {
+      if (p.livre) { p.vx *= Math.pow(.996, dt); p.vy *= Math.pow(.996, dt); restringe(p, mundo); return; }   // atrito leve, sem frear
       const la = Math.hypot(e.pt.x - p.ancora.x, e.pt.y - p.ancora.y);
       const resto = Math.max(50 * p.U, p.lmax - la);
       const dx = p.x - e.pt.x, dy = p.y - e.pt.y, d = Math.hypot(dx, dy) || 1;
@@ -234,7 +236,7 @@
   }
 
   function desenhaPipa(g, p, alpha) {
-    desenhaRabiola(g, p.rab, (p.grande ? 4 : 2.6) * p.U * Math.max(.6, p.esc));
+    if (!(p.spr && p.spr.semRab)) desenhaRabiola(g, p.rab, (p.grande ? 4 : 2.6) * p.U * Math.max(.6, p.esc));
     const s = p.s * p.esc;
     g.save(); g.translate(p.x, p.y); g.rotate(p.a + p.vis);
     g.scale(.7 + .3 * p.env, .94 + .06 * p.env);
@@ -454,7 +456,7 @@
       const r = $("#pvReel img"); if (r) r.src = `${M}carretilhas/${n}.webp`;
     });
   }
-  const PIPAS = ["cafifa_1", "cafifa_3", "peixinho_4", "peixinho_quadriculado", "peixinho_caveira", "peixinho_bra", "peixinho_x", "peixinho_pb", "pipa1_1", "pipa1_2", "pipa1_aguia", "pipa1_dragao", "pipa1_estrela", "pipa1_fogo", "pipa1_olhos", "pipa1_raposa", "pipa1_tigre", "pipa1_cifrao", "pipa1_color", "pipa1_ceifador", "pipao_2", "pipao_4", "pipao_coroa", "pipao_flecha", "pipao_laminado", "pipao_quadriculado"];
+  const PIPAS = ["raia_1", "raia_azul", "raia_3", "cafifa_1", "cafifa_3", "peixinho_4", "peixinho_quadriculado", "peixinho_caveira", "peixinho_bra", "peixinho_x", "peixinho_pb", "pipa1_1", "pipa1_2", "pipa1_aguia", "pipa1_dragao", "pipa1_estrela", "pipa1_fogo", "pipa1_olhos", "pipa1_raposa", "pipa1_tigre", "pipa1_cifrao", "pipa1_color", "pipa1_ceifador", "pipao_2", "pipao_4", "pipao_coroa", "pipao_flecha", "pipao_laminado", "pipao_quadriculado"];
   const pt = $("#pipasTrack");
   if (pt) pt.innerHTML = PIPAS.concat(PIPAS).map(n => `<img src="${M}pipas/${n}.webp" alt="" loading="lazy">`).join("");
 
@@ -491,13 +493,13 @@
     med(); addEventListener("resize", med);
     const U = celular ? .78 : 1;
     const SK = ["pipa1_aguia", "pipa1_dragao", "pipa1_fogo", "pipa1_tigre", "pipa1_raposa", "pipa1_estrela", "peixinho_bra", "pipa1_color", "pipao_coroa"].map(img);
-    const RIV = ["pipa1_ceifador", "peixinho_caveira", "pipa1_olhos", "pipao_flecha", "cafifa_3", "pipa1_2"].map(img);
+    const RIV = ["pipa1_ceifador", "raia_azul", "peixinho_caveira", "raia_3", "pipa1_olhos", "pipao_flecha", "raia_1", "cafifa_3", "pipa1_2"].map(img);
     const mundo = { W, H, teto: celular ? 80 : 70, chao: H * .62, vento: .3, t: 0, prof: y => .55 + .5 * Math.max(0, Math.min(1, y / (H * .7))) };
     const O = () => ({ x: W / 2, y: H - (celular ? 34 : 38) });
     let eu = null, rival = null, engate = null, mandadas = [], restos = [], sparks = [], textos = [], aparadas = [];
     // pipas da vizinhança lá longe, pra dar profundidade ao céu
     const longe = (celular ? [.1, .9] : [.08, .3, .7, .93]).map((f, i) => {
-      const p = novaPipa({ x: W * f, y: H * .3, a: (f < .5 ? .4 : -.4), s: 58 * U, U, vp: Math.max(2, W * .0026), ancora: { x: W * f, y: H + 6 }, lmax: H * .95, lmin: H * .6, lmaxMax: H * 1.1, spr: img(["pipa1_1", "peixinho_4", "cafifa_1", "pipa1_cifrao"][i % 4]), semente: i * 2.3, nRab: 12, segRab: 7 });
+      const p = novaPipa({ x: W * f, y: H * .3, a: (f < .5 ? .4 : -.4), s: 58 * U, U, vp: Math.max(2, W * .0026), ancora: { x: W * f, y: H + 6 }, lmax: H * .95, lmin: H * .6, lmaxMax: H * 1.1, spr: img(["raia_1", "peixinho_4", "raia_azul", "pipa1_cifrao"][i % 4]), semente: i * 2.3, nRab: 12, segRab: 7 });
       p.alvoX = f; return p;
     });
     let proxRival = performance.now() + 7000, giroReel = 0, oculta = false, arrasto = null, ordem = 0, cortes = [], renasce = 0;
@@ -507,7 +509,7 @@
 
     function nasce() {
       const o = O();
-      eu = novaPipa({ x: W * (celular ? .7 : .78), y: H * .24, a: 0, s: 70 * U, U, vp: Math.max(2.2, W * .0026), ancora: o, lmax: H * .7, lmin: H * .35, lmaxMax: H * 1.1, spr: SK[(Math.random() * SK.length) | 0], agr: 1.1, semente: Math.random() * 9 });
+      eu = novaPipa({ x: W * (celular ? .72 : .8), y: H * (celular ? .15 : .24), a: 0, s: 70 * U, U, vp: Math.max(2.2, W * .0026), ancora: o, lmax: H * .7, lmin: H * .35, lmaxMax: H * 1.1, spr: SK[(Math.random() * SK.length) | 0], agr: 1.1, semente: Math.random() * 9 });
       eu.ia = "puxa"; eu.tIA = 40;
     }
     nasce();
@@ -583,7 +585,7 @@
         } else {
           let alvo;
           if (rival && !rival.entrando) alvo = alvoDeCaca(eu, linhaDe(rival, 8));
-          else alvo = { x: W * (celular ? .74 : .8) + Math.sin(mundo.t * .4) * W * .1, y: H * (celular ? .16 : .22) + Math.sin(mundo.t * .55) * H * .06 };
+          else alvo = { x: W * (celular ? .74 : .8) + Math.sin(mundo.t * .4) * W * .1, y: H * (celular ? .15 : .22) + Math.sin(mundo.t * .55) * H * (celular ? .03 : .06) };
           if (ordem > 0) ordem -= dt; else piloto(eu, alvo, dt, mundo);
           passoPipa(eu, dt, mundo);
         }
@@ -651,7 +653,7 @@
       if (eu) { desenhaLinha(g, linhaDe(eu), cor, celular ? 1.4 : 1.6, celular ? 0 : 6); desenhaPipa(g, eu); }
       sparks = desenhaFaiscas(g, sparks, dt, 2.5);
       textos = desenhaTextos(g, textos, dt);
-      if (eu && !usou && !arrasto && eu.y < H * .42) indicador(eu, agora);
+      if (eu && !usou && !arrasto && eu.y < H * (celular ? .24 : .42)) indicador(eu, agora);
       requestAnimationFrame(quadro);
     }
     function indicador(p, t) {
@@ -684,7 +686,7 @@
     const g = cv.getContext("2d");
     const U = retrato ? 1.25 : 1;
     const avisoEl = $("#jgAviso");
-    const SPR = ["pipa1_dragao", "pipa1_fogo", "pipa1_tigre", "pipa1_raposa", "peixinho_caveira", "pipa1_color", "cafifa_3", "pipa1_ceifador", "peixinho_x", "pipa1_olhos"].map(img);
+    const SPR = ["pipa1_dragao", "raia_1", "pipa1_fogo", "raia_azul", "pipa1_tigre", "peixinho_caveira", "raia_3", "pipa1_color", "cafifa_3", "pipa1_ceifador", "peixinho_x", "raia_1"].map(img);
     const BOSS = img("pipao_coroa"), MINHA = img("pipa1_aguia");
     const costas = new Image(); costas.src = M + "jogo_costas.webp";
     const REC = "relo_recorde_v3", DUR = 45000;
