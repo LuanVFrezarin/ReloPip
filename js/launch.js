@@ -113,7 +113,8 @@
     p.vx += (avx - p.vx) * laco * dt; p.vy += (avy - p.vy) * laco * dt;
     p.x += p.vx * dt; p.y += p.vy * dt;
     const dx = p.x - p.ancora.x, dy = p.y - p.ancora.y, d = Math.hypot(dx, dy) || 1;
-    if (d > p.lmax) {
+    if (p.livre) p.lmax = d;   // no mini jogo a linha corre solta: a pipa nunca trava esticada
+    else if (d > p.lmax) {
       const nx = dx / d, ny = dy / d;
       p.x = p.ancora.x + nx * p.lmax; p.y = p.ancora.y + ny * p.lmax;
       const vr = p.vx * nx + p.vy * ny; if (vr > 0) { p.vx -= vr * nx; p.vy -= vr * ny; }
@@ -149,7 +150,7 @@
       for (let i = 1; i <= 4; i++) { const t = i / 4; pts.push({ x: v.x + (bx - v.x) * t, y: v.y + (by - v.y) * t }); }
       return pts;
     }
-    const d = Math.hypot(bx - ax, by - ay), folga = Math.max(0, p.lmax - d);
+    const d = Math.hypot(bx - ax, by - ay), folga = p.livre ? 0 : Math.max(0, p.lmax - d);
     const sag = Math.min(folga * .5, 170 * p.U) + (6 + 46 * (p.folga || 0)) * p.U * Math.min(1, d / (300 * p.U));
     const cx = (ax + bx) / 2 + (bx > ax ? sag * .25 : -sag * .25), cy = (ay + by) / 2 + sag;
     const pts = [];
@@ -199,7 +200,7 @@
   // piloto: solta pra rodar até o bico mirar no alvo e aí puxa (é assim que se joga)
   function piloto(b, alvo, dt, mundo) {
     b.lento = Math.hypot(b.vx, b.vy) < b.vp * .15 ? (b.lento || 0) + dt : 0;
-    if (b.lento > 45) { b.lento = 0; b.ia = "mira"; b.giro = -b.giro; b.tSolta = 0; b.a += b.giro * .6; }
+    if (b.lento > 60) { b.lento = 0; b.ia = "mira"; b.giro = -b.giro; b.tSolta = 0; }
     if (mundo.alto && alvo.y > mundo.alto) alvo = { x: alvo.x, y: mundo.alto - 30 * b.U };   // pipa boa fica no alto
     const rumo = Math.atan2(alvo.x - b.x, b.y - alvo.y);
     const err = angDif(b.a, rumo);
@@ -707,12 +708,12 @@
     const nuvens = Array.from({ length: 6 }, () => ({ x: Math.random() * W, y: 40 + Math.random() * HOR * .55, s: (.6 + Math.random() * .8) * U, v: .12 + Math.random() * .2 }));
 
     function nasceEu() {
-      eu = novaPipa({ x: MAO.x, y: MAO.y - H * .52, a: 0, s: 56 * U, U, vp: W * .0023, ancora: MAO, dmin: H * .5, lmax: H * .85, lmin: H * .6, lmaxMax: H * 1.3, spr: MINHA, nRab: 18, segRab: 10, semente: 1 });
+      eu = novaPipa({ x: MAO.x, y: MAO.y - H * .52, a: 0, s: 34 * U, U, vp: W * .0021, ancora: MAO, dmin: H * .5, livre: true, lmax: H, lmin: 0, lmaxMax: H * 3, spr: MINHA, nRab: 16, segRab: 4.2, semente: 1 });
       eu.subindo = 40;
     }
     function nasceBot(pipao) {
       const base = BASES[(Math.random() * BASES.length) | 0];
-      const b = novaPipa({ x: base.x, y: base.y - 50 * U, a: (base.x < W / 2 ? .5 : -.5), s: (pipao ? 86 : 46 + Math.random() * 8) * U, U, vp: W * (pipao ? .0019 : .0023), ancora: base, dmin: H * .32, lmax: H * .8, lmin: H * .5, lmaxMax: H * 1.1, spr: pipao ? BOSS : SPR[(Math.random() * SPR.length) | 0], agr: pipao ? .6 : .7 + Math.random() * .6, semente: Math.random() * 9, nRab: pipao ? 22 : 14, segRab: pipao ? 13 : 9 });
+      const b = novaPipa({ x: base.x, y: base.y - 50 * U, a: (base.x < W / 2 ? .5 : -.5), s: (pipao ? 54 : 28 + Math.random() * 6) * U, U, vp: W * (pipao ? .0017 : .002), ancora: base, dmin: H * .3, livre: true, lmax: H, lmin: 0, lmaxMax: H * 3, spr: pipao ? BOSS : SPR[(Math.random() * SPR.length) | 0], agr: pipao ? .6 : .7 + Math.random() * .6, semente: Math.random() * 9, nRab: pipao ? 18 : 13, segRab: pipao ? 6 : 3.6 });
       b.pipao = pipao; b.grande = pipao; b.vida = pipao ? 2.6 : 1; b.entrando = 50;
       bots.push(b);
     }
@@ -830,7 +831,7 @@
         passoMandada(m, dt, mundo, U, 1.05);
         if (m.dono === "bot" && minhaL && m.t > 20) {
           const d = distLinha({ x: m.p.x, y: m.p.y }, minhaL);
-          if (d.d < 30 * U && d.u > .08 && d.u < .97) {
+          if (d.d < 22 * U && d.u > .08 && d.u < .97) {
             m.fora = true; aparadas.push({ p: m.p, u: d.u });
             if (rodando) { pts += 1; $("#jgPts").textContent = pts; aviso(avisoEl, "APARO", "A mandada grudou na sua linha. Recolhendo.", 1600); }
             textos.push(gritoVerde(m.p.x, m.p.y - 50 * U, "APAROU!", U));
