@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Loja de Pipoints | RELO</title>
+  <meta name="description" content="Compre Pipoints (PP) do RELO pelo Mercado Pago. Entra na mesma conta do jogo, no celular e no PC.">
+  <meta name="theme-color" content="#080910">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="icon" type="image/png" href="../media/icon.png">
+  <link rel="apple-touch-icon" href="../media/icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/loja.css">
+</head>
+<body class="lj-body">
+  <header class="lj-nav">
+    <div class="lj-wrap lj-nav-in">
+      <a class="lj-brand" href="../" aria-label="RELO — início"><img src="../media/logo.webp" alt="RELO"></a>
+      <nav class="lj-links" aria-label="Site">
+        <a href="../">Início</a>
+        <a href="../suporte.html">Suporte</a>
+      </nav>
+      <div class="lj-chip" id="chip" hidden>
+        <span class="lj-chip-pp"><b id="chipSaldo">0</b> PP</span>
+        <button class="lj-sair" id="btnSair" type="button">Sair</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="lj-main">
+    <section class="lj-hero lj-wrap">
+      <span class="lj-eyebrow">Loja oficial</span>
+      <h1>Pipoints <span>no site</span></h1>
+      <p>Comprou aqui, cai na <b>mesma conta do jogo</b> — celular ou PC. Pagamento pelo Mercado Pago: Pix, cartão ou saldo.</p>
+    </section>
+
+    <!-- Retorno do Mercado Pago -->
+    <section class="lj-wrap" id="statusBox" hidden aria-live="polite">
+      <div class="lj-status" id="statusCard">
+        <span class="lj-status-ico" id="statusIco" aria-hidden="true"></span>
+        <div>
+          <h2 id="statusTitulo"></h2>
+          <p id="statusTexto"></p>
+        </div>
+      </div>
+    </section>
+
+    <div class="lj-wrap lj-grid">
+      <!-- Conta -->
+      <section class="lj-card lj-conta" aria-labelledby="contaTitulo">
+        <div id="contaFora">
+          <h2 id="contaTitulo">Entre com a conta do jogo</h2>
+          <p class="lj-muted">Use o mesmo jeito que você entra no RELO. Os PP vão para essa conta.</p>
+
+          <div class="lj-sso">
+            <div id="googleBtn" class="lj-google" aria-label="Entrar com Google"></div>
+            <button class="lj-apple" id="appleBtn" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.6 12.7c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9s-1.8-.8-3-.8c-1.6 0-3 .9-3.8 2.3-1.6 2.8-.4 7 1.2 9.3.8 1.1 1.7 2.4 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7 2.1-1.1 2.8-2.2c.9-1.3 1.3-2.5 1.3-2.6-.1 0-2.5-1-2.5-3.9ZM14.3 5.9c.6-.8 1.1-1.9.9-3-.9 0-2 .6-2.7 1.4-.6.7-1.1 1.8-1 2.9 1.1.1 2.1-.5 2.8-1.3Z"/></svg>
+              <span>Entrar com Apple</span>
+            </button>
+          </div>
+
+          <div class="lj-ou"><span>ou com e-mail</span></div>
+
+          <form id="formEmail" class="lj-form" novalidate>
+            <label>E-mail<input id="email" type="email" autocomplete="username" inputmode="email" maxlength="254" required></label>
+            <label>Senha<input id="senha" type="password" autocomplete="current-password" maxlength="128" required></label>
+            <button class="btn btn-primary lj-full" id="btnEntrar" type="submit">Entrar</button>
+          </form>
+          <p class="lj-err" id="erroLogin" role="alert"></p>
+          <p class="lj-fino">Não tem conta? Crie dentro do jogo. Conta de visitante não compra — vincule Google, Apple ou e-mail no jogo primeiro.</p>
+        </div>
+
+        <div id="contaDentro" hidden>
+          <h2>Sua conta</h2>
+          <p class="lj-nome" id="contaNome"></p>
+          <p class="lj-muted" id="contaEmail"></p>
+          <div class="lj-saldo">
+            <span>Saldo</span>
+            <strong><b id="saldo">0</b> PP</strong>
+          </div>
+          <p class="lj-fino">É a mesma carteira do jogo. Abra o RELO e o saldo já aparece.</p>
+          <button class="btn btn-ghost lj-full" id="btnSair2" type="button">Sair desta conta</button>
+        </div>
+      </section>
+
+      <!-- Pacotes -->
+      <section class="lj-card lj-pacotes" aria-labelledby="pacotesTitulo">
+        <h2 id="pacotesTitulo">Escolha o pacote</h2>
+        <div class="lj-packs" id="packs" aria-busy="true">
+          <div class="lj-pack lj-skel"></div><div class="lj-pack lj-skel"></div><div class="lj-pack lj-skel"></div>
+        </div>
+        <p class="lj-err" id="erroCompra" role="alert"></p>
+        <p class="lj-fino">Os PP entram quando o Mercado Pago confirma o pagamento — Pix costuma ser na hora. Compras de moeda virtual seguem os <a href="../legal/termos.html">Termos de Uso</a>.</p>
+      </section>
+    </div>
+
+    <section class="lj-wrap lj-card lj-hist" id="histBox" hidden aria-labelledby="histTitulo">
+      <h2 id="histTitulo">Suas compras</h2>
+      <div class="lj-tabela">
+        <table>
+          <thead><tr><th>Data</th><th>Pacote</th><th>Valor</th><th>Situação</th></tr></thead>
+          <tbody id="histCorpo"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="lj-foot">
+    <div class="lj-wrap">
+      <a href="../legal/termos.html">Termos de Uso</a>
+      <a href="../legal/privacidade.html">Privacidade</a>
+      <a href="../conta/excluir.html">Excluir minha conta</a>
+      <a href="../suporte.html">Suporte</a>
+    </div>
+  </footer>
+
+  <div class="lj-toast" id="toast" role="status"></div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/relo-session.js"></script>
+  <script src="../js/loja.js"></script>
+</body>
+</html>

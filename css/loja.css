@@ -1,0 +1,117 @@
+/* RELO — Loja de Pipoints do site. Usa os tokens de style.css. */
+.lj-body [hidden]{display:none!important}
+.lj-body{min-height:100vh;display:flex;flex-direction:column}
+.lj-wrap{width:100%;max-width:1120px;margin:0 auto;padding:0 24px}
+.lj-main{flex:1;padding:96px 0 56px}
+
+/* nav */
+.lj-nav{position:fixed;top:0;left:0;right:0;z-index:30;background:rgba(7,8,16,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.lj-nav-in{height:64px;display:flex;align-items:center;gap:22px}
+.lj-brand img{height:34px;width:auto;display:block}
+.lj-links{display:flex;gap:18px;margin-right:auto}
+.lj-links a{color:var(--muted);text-decoration:none;font:600 16px Rajdhani,sans-serif}
+.lj-links a:hover{color:#fff}
+.lj-chip{display:flex;align-items:center;gap:10px}
+.lj-chip-pp{padding:6px 12px;border-radius:999px;border:1px solid var(--line-strong);background:rgba(255,209,90,.08);font:600 15px Rajdhani,sans-serif;color:var(--gold)}
+.lj-chip-pp b{font:700 16px Oswald,sans-serif}
+.lj-sair{border:0;background:none;color:var(--muted);font:600 15px Rajdhani,sans-serif;cursor:pointer;padding:6px}
+.lj-sair:hover{color:#fff}
+
+/* hero */
+.lj-hero{padding-top:24px;padding-bottom:28px}
+.lj-eyebrow{display:inline-block;font:700 13px Oswald,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan)}
+.lj-hero h1{font:700 clamp(44px,8vw,92px)/.95 Oswald,sans-serif;color:var(--gold);margin:8px 0 14px;letter-spacing:0}
+.lj-hero h1 span{color:#fff}
+.lj-hero p{font-size:clamp(17px,2.2vw,20px);color:var(--muted);max-width:640px}
+.lj-hero b{color:#fff}
+
+/* layout */
+.lj-grid{display:grid;grid-template-columns:minmax(300px,380px) 1fr;gap:18px;align-items:start}
+.lj-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:24px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.lj-card h2{font:700 24px Oswald,sans-serif;letter-spacing:.01em;margin-bottom:6px}
+.lj-muted{color:var(--muted)}
+.lj-fino{color:var(--faint);font-size:15px;margin-top:14px}
+.lj-fino a{color:var(--muted)}
+.lj-err{color:#ff8a9b;min-height:22px;margin-top:8px;font-weight:600}
+.lj-full{width:100%}
+
+/* login */
+.lj-sso{display:grid;gap:10px;margin-top:18px}
+.lj-google{min-height:44px;display:flex;justify-content:center}
+.lj-google iframe{margin:0 auto!important}
+.lj-google.off{border:1px dashed var(--line);border-radius:999px;align-items:center;color:var(--faint);font-size:15px}
+.lj-apple{display:flex;align-items:center;justify-content:center;gap:10px;height:44px;border-radius:999px;border:0;background:#fff;color:#000;font:600 16px -apple-system,"Segoe UI",Rajdhani,sans-serif;cursor:pointer}
+.lj-apple svg{width:20px;height:20px;fill:#000}
+.lj-apple:disabled{opacity:.45;cursor:not-allowed}
+.lj-ou{display:flex;align-items:center;gap:10px;margin:18px 0 12px;color:var(--faint);font-size:14px}
+.lj-ou::before,.lj-ou::after{content:"";flex:1;height:1px;background:var(--line)}
+.lj-form{display:grid;gap:12px}
+.lj-form label{display:grid;gap:5px;color:var(--muted);font-weight:600}
+.lj-form input{width:100%;height:46px;padding:0 14px;border-radius:12px;border:1px solid var(--line);background:rgba(0,0,0,.35);color:#fff;font:600 16px Rajdhani,sans-serif}
+.lj-form input:focus{outline:2px solid var(--gold);outline-offset:1px;border-color:transparent}
+
+/* conta */
+.lj-nome{font:700 22px Oswald,sans-serif;margin-top:8px;overflow-wrap:anywhere}
+.lj-saldo{margin:18px 0 4px;padding:16px 18px;border-radius:14px;border:1px solid var(--line-strong);background:rgba(255,209,90,.07);display:flex;align-items:baseline;justify-content:space-between}
+.lj-saldo span{color:var(--muted)}
+.lj-saldo strong{font:700 34px Oswald,sans-serif;color:var(--gold)}
+#contaDentro .btn{margin-top:16px}
+
+/* pacotes */
+.lj-packs{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px;margin-top:14px}
+.lj-pack{position:relative;display:flex;flex-direction:column;gap:4px;padding:18px 16px 16px;border-radius:16px;border:1px solid var(--line);background:rgba(0,0,0,.28);min-height:176px;transition:border-color .2s,transform .2s}
+.lj-pack:hover{border-color:var(--line-strong);transform:translateY(-2px)}
+.lj-pack.dest{border-color:var(--gold);background:linear-gradient(180deg,rgba(255,209,90,.10),rgba(0,0,0,.28))}
+.lj-tag{position:absolute;top:-10px;left:14px;padding:3px 9px;border-radius:999px;background:var(--gold);color:#160b00;font:700 11px Oswald,sans-serif;letter-spacing:.08em}
+.lj-pp{font:700 34px/1 Oswald,sans-serif;color:var(--gold);margin-top:6px}
+.lj-pp small{font-size:16px;color:var(--muted);margin-left:4px}
+.lj-bonus{color:var(--green);font-weight:700;font-size:14px}
+.lj-preco{font:600 19px Rajdhani,sans-serif;color:#fff;margin-bottom:10px}
+.lj-pack .btn{margin-top:auto;width:100%;padding:11px 12px;font-size:14px}
+.lj-pack .btn:disabled{opacity:.6;cursor:wait}
+.lj-skel{background:linear-gradient(90deg,rgba(255,255,255,.04),rgba(255,255,255,.09),rgba(255,255,255,.04));background-size:200% 100%;animation:ljSk 1.2s linear infinite}
+@keyframes ljSk{to{background-position:-200% 0}}
+
+/* status do pagamento */
+.lj-status{display:flex;gap:16px;align-items:center;margin-bottom:18px;padding:18px 20px;border-radius:var(--r);border:1px solid var(--line);background:var(--panel)}
+.lj-status h2{font:700 22px Oswald,sans-serif}
+.lj-status p{color:var(--muted)}
+.lj-status-ico{flex:none;width:42px;height:42px;border-radius:50%;border:3px solid var(--line)}
+.lj-status.esperando .lj-status-ico{border-color:var(--gold) transparent var(--gold) transparent;animation:ljGira 1s linear infinite}
+.lj-status.ok{border-color:rgba(82,242,143,.5);background:rgba(82,242,143,.08)}
+.lj-status.ok .lj-status-ico{border-color:var(--green);background:var(--green)}
+.lj-status.falhou{border-color:rgba(255,79,109,.5);background:rgba(255,79,109,.07)}
+.lj-status.falhou .lj-status-ico{border-color:var(--red)}
+@keyframes ljGira{to{transform:rotate(360deg)}}
+
+/* histórico */
+.lj-hist{margin-top:18px}
+.lj-tabela{overflow-x:auto;margin-top:10px}
+.lj-tabela table{width:100%;border-collapse:collapse;font:600 15px Rajdhani,sans-serif;min-width:460px}
+.lj-tabela th,.lj-tabela td{padding:10px 8px;text-align:left;border-bottom:1px solid var(--line)}
+.lj-tabela th{color:var(--faint);font-size:13px;text-transform:uppercase;letter-spacing:.05em}
+.st-APPROVED{color:var(--green)}.st-PENDING{color:var(--gold)}
+.st-REJECTED,.st-CANCELLED,.st-EXPIRED,.st-ERROR,.st-REFUNDED,.st-CHARGEBACK{color:#ff8a9b}
+
+/* rodapé + toast */
+.lj-foot{border-top:1px solid var(--line);padding:20px 0;background:#06070c}
+.lj-foot .lj-wrap{display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:center}
+.lj-foot a{color:var(--muted);font:600 15px Rajdhani,sans-serif;text-decoration:none}
+.lj-toast{position:fixed;left:50%;bottom:20px;z-index:40;max-width:min(420px,calc(100% - 32px));padding:12px 18px;border-radius:12px;background:var(--gold);color:#160b00;font-weight:700;opacity:0;transform:translate(-50%,12px);pointer-events:none;transition:.2s}
+.lj-toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media (max-width:820px){
+  .lj-grid{grid-template-columns:1fr}
+  .lj-pacotes{order:-1}
+}
+@media (max-width:520px){
+  .lj-wrap{padding:0 16px}
+  .lj-main{padding-top:84px}
+  .lj-links{display:none}
+  .lj-chip{margin-left:auto}
+  .lj-card{padding:18px}
+  .lj-packs{grid-template-columns:1fr 1fr;gap:10px}
+  .lj-pack{min-height:160px;padding:16px 12px 12px}
+  .lj-pp{font-size:28px}
+}
+@media (prefers-reduced-motion:reduce){.lj-skel,.lj-status.esperando .lj-status-ico{animation:none}}

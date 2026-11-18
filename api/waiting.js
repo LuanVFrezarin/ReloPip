@@ -4,6 +4,13 @@ const fallbackStart = 0;
 
 module.exports = async function handler(req, res) {
   res.setHeader("Content-Type", "application/json");
+  res.setHeader("Cache-Control", "no-store");
+  if (req.method !== "GET" && req.method !== "POST") {
+    res.statusCode = 405;
+    res.setHeader("Allow", "GET, POST");
+    res.end(JSON.stringify({ error: "metodo_nao_permitido" }));
+    return;
+  }
 
   const url = process.env.UPSTASH_REDIS_REST_URL;
   const token = process.env.UPSTASH_REDIS_REST_TOKEN;
@@ -30,7 +37,8 @@ module.exports = async function handler(req, res) {
     }
 
     if (req.method === "POST") {
-      const ip = String(req.headers["x-forwarded-for"] || req.socket?.remoteAddress || "").split(",")[0].trim();
+      // Na Vercel, x-real-ip é escrito pela borda (o cliente não escolhe).
+      const ip = String(req.headers["x-real-ip"] || req.headers["x-forwarded-for"] || req.socket?.remoteAddress || "").split(",")[0].trim();
       const ua = String(req.headers["user-agent"] || "");
       const visitor = crypto.createHash("sha256").update(`${ip}|${ua}`).digest("hex").slice(0, 32);
       const visitorKey = `${key}:visitor:${visitor}`;

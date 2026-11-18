@@ -48,9 +48,21 @@
     MERCADO_PAGO_MODE: ambiente.mercadoPagoMode,
     USE_MOCK: false,
 
-    // FALTANDO: mesmo Client ID do backend (.env) e do jogo.
-    // Vazio => o botão Google fica desabilitado com mensagem, nunca simulado.
-    GOOGLE_CLIENT_ID: "",
+    // Client ID WEB do Google — o MESMO GOOGLE_CLIENT_ID da Railway (o Android
+    // também pede token para ele). Não é segredo: só identifica o app. Para o
+    // botão funcionar, o domínio do site precisa estar em "Origens JavaScript
+    // autorizadas" desse client no Google Cloud Console.
+    GOOGLE_CLIENT_ID: "710710408953-o7hjlq8skkuo6emnjibd8mb7iaqsqj7l.apps.googleusercontent.com",
+
+    // Sign in with Apple na web usa um SERVICES ID (não o bundle do app),
+    // agrupado ao App ID com.relogame.game — assim o `sub` da Apple é o mesmo
+    // do iPhone e a conta é a mesma. Vazio => botão Apple aparece desabilitado.
+    // Depois de criar, acrescente o mesmo valor em APPLE_SIGNIN_AUDIENCES na Railway.
+    APPLE_SERVICES_ID: "",
+    APPLE_REDIRECT_URI: "https://www.relogame.com.br/loja/",
+
+    // Únicos destinos aceitos para o checkout devolvido pelo backend.
+    CHECKOUT_HOSTS: ["www.mercadopago.com.br", "mercadopago.com.br", "sandbox.mercadopago.com.br", "www.mercadopago.com", "mercadopago.com"],
 
     // Endpoints CANÔNICOS da conta única — os MESMOS que o jogo usa (§22).
     ENDPOINTS: {
@@ -59,6 +71,7 @@
       register:     "/auth/register",
       login:        "/auth/login",
       login_google: "/auth/google",
+      login_apple:  "/auth/apple",
       upgrade:      "/auth/guest/upgrade",
       refresh:      "/auth/refresh",
       logout:       "/auth/logout",

@@ -42,6 +42,15 @@ window.ReloSession = (function () {
       pacote_nao_encontrado: "Pacote indisponível.",
       conta_visitante_precisa_registrar: "Crie uma conta para comprar Pipoints.",
       google_nao_configurado: "Login com Google indisponível nesta versão.",
+      google_invalido: "O Google não confirmou o login. Tente de novo.",
+      google_email_ja_em_uso: "Esse e-mail já tem conta RELO com senha. Entre com e-mail e senha (ou vincule o Google dentro do jogo).",
+      apple_signin_nao_configurado: "Entrar com Apple ainda não está disponível no site.",
+      apple_invalido: "A Apple não confirmou o login. Tente de novo.",
+      apple_email_ja_em_uso: "Esse e-mail já tem conta RELO. Entre do mesmo jeito que você entra no jogo.",
+      compra_nao_encontrada: "Pedido não encontrado nesta conta.",
+      pagamento_consulta_indisponivel: "Não deu para consultar o Mercado Pago agora. Tentamos de novo em instantes.",
+      mercado_pago_nao_configurado: "Pagamento indisponível no momento.",
+      rate_limited: "Muitas tentativas. Aguarde um minuto.",
       SAVE_CONFLICT: "Seu progresso foi atualizado em outro dispositivo.",
     })[erro] || String(erro || "Falha na operação.").replaceAll("_", " ");
   }
@@ -158,10 +167,19 @@ window.ReloSession = (function () {
       }));
     },
 
-    async entrarComGoogle(idToken) {
+    async entrarComGoogle(idToken, nonce) {
       if (!cfg.GOOGLE_CLIENT_ID) throw new Error(mensagem("google_nao_configurado"));
       return adotar(await api(E.login_google || "/auth/google", {
-        auth: false, method: "POST", body: { idToken, platform: "Web" },
+        auth: false, method: "POST", body: { idToken, nonce: nonce || undefined, platform: "Web" },
+      }));
+    },
+
+    /** Mesmo POST /auth/apple do iPhone. O nonce cru vai junto; o backend confere. */
+    async entrarComApple(identityToken, nonce, fullName) {
+      if (!cfg.APPLE_SERVICES_ID) throw new Error(mensagem("apple_signin_nao_configurado"));
+      return adotar(await api(E.login_apple || "/auth/apple", {
+        auth: false, method: "POST",
+        body: { identityToken, nonce, fullName: fullName || undefined, platform: "Web" },
       }));
     },
 

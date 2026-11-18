@@ -278,3 +278,6 @@ html{scroll-padding-top:96px}
 .vitrine-sec{position:relative;z-index:50;overflow:hidden;padding:4px 0 18px}
 .vitrine-sec .pipas-mq{margin:0 0 18px}
 .vitrine-sec .gal-track{margin-bottom:0}
+
+/* Loja PP: no celular estreito o link fica no menu (burger), não no topo. */
+@media (max-width:440px){.nav-actions .btn-ghost{display:none}}

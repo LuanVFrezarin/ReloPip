@@ -1,0 +1,7 @@
+# Não publicar arquivos de trabalho
+captures/
+.claude/
+.agents/
+*.bat
+README.md
+SEGURANCA.md
