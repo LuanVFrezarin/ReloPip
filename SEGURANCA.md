@@ -15,7 +15,13 @@ Revisão de 17/11/2026. O site é estático (Vercel); quem decide tudo é o back
 - Safari/Firefox bloqueiam cookie de terceiros: lá a sessão não volta ao recarregar (o jogador entra de novo). Corrige de vez com `api.relogame.com.br` (ver pendências).
 
 ## Cabeçalhos (vercel.json)
-CSP restrita (scripts só do próprio site, Google GSI e Apple; `object-src 'none'`, `frame-ancestors 'none'`, `base-uri 'self'`), HSTS, `nosniff`, `X-Frame-Options: DENY`, `Referrer-Policy`, `Permissions-Policy`, `COOP: same-origin-allow-popups` (necessário para os popups do Google/Apple). `/loja` e `/api` com `no-store`.
+CSP restrita: scripts só do próprio site, Google GSI e Apple; sem `unsafe-inline` em script nem em estilo (exceto estilo na `/loja`, porque o botão do Google injeta `<style>`); `object-src 'none'`, `frame-ancestors 'none'`, `base-uri 'self'`. Mais HSTS, `nosniff`, `X-Frame-Options: DENY`, `Referrer-Policy`, `Permissions-Policy`, `COOP: same-origin-allow-popups` (popups do Google/Apple), `CORP: same-origin`, `X-Permitted-Cross-Domain-Policies: none`. `/loja` e `/api` com `no-store`. Nenhum `style=` inline no HTML: cores dinâmicas vão por CSSOM (`style.setProperty`).
+
+## Backend (reforço 18/11/2026, `auth.routes.js`)
+- `/auth/refresh` pelo **cookie** só aceita `Origin` listado em `CORS_ORIGIN` (403 `origem_nao_permitida` caso contrário). Fecha o CSRF que o `SameSite=None` abriria. O jogo manda o refresh no corpo e não muda nada.
+- Logout e exclusão apagam o cookie com os mesmos atributos (`SameSite=None; Secure`), senão o navegador ignorava.
+- Teste: `test/site-refresh-cookie.test.js`.
+- Webhook do MP: decidimos **não** recusar por horário (`ts`). Reenvio já não credita (dedup + reconsulta no MP) e recusar aviso atrasado só atrasaria crédito legítimo.
 
 ## Código do site
 - Nenhum dado da API vai para `innerHTML` (só `textContent`/`createElement`).
@@ -30,4 +36,4 @@ CSP restrita (scripts só do próprio site, Google GSI e Apple; `object-src 'non
 1. **Google Cloud Console** → Credenciais → client Web `710710408953-o7hj…` → *Origens JavaScript autorizadas*: `https://www.relogame.com.br` e `https://relogame.com.br`.
 2. **Apple Developer** → Identifiers → *Services IDs* → criar `com.relogame.web`, ativar *Sign in with Apple* com **Primary App ID `com.relogame.game`** (isso mantém o mesmo `sub` → mesma conta do iPhone); domínio `www.relogame.com.br`, return URL `https://www.relogame.com.br/loja/`. Depois: `APPLE_SIGNIN_AUDIENCES=com.relogame.game,com.relogame.web` na Railway e `APPLE_SERVICES_ID: "com.relogame.web"` em `js/config.js`.
 3. (Recomendado) Domínio `api.relogame.com.br` → Railway (CNAME no Registro.br). Aí `apiBase` passa para ele e o cookie volta a `SameSite=Lax` (primeira parte, funciona no Safari).
-4. (Backend, próxima versão) Conferir `Origin` em `/auth/refresh` quando vier por cookie e checar o `ts` do webhook do MP (janela de 5 min).
+4. A produção da Railway vem de `railway up` da pasta local (não do GitHub). O reforço acima foi enviado assim; o GitHub do backend continua sem esse arquivo commitado, junto com o resto do trabalho local.

@@ -406,7 +406,9 @@
     const pede = () => { if (!raf) raf = requestAnimationFrame(desenha); };
     function monta(cat) {
       const prefixo = cat === "anime" ? "anime_" : cat === "mandrake" ? "mandrake_" : "especial_";
-      st.innerHTML = SKINS[cat].map(([id, n]) => `<article class="skin" style="--cat:${CORCAT[cat]}"><div class="sk-fundo"><img src="${M}skins/${prefixo}${id}.webp" alt="${n}" loading="lazy" draggable="false"></div><h3>${n}</h3><span>450 PP</span></article>`).join("");
+      st.innerHTML = SKINS[cat].map(([id, n]) => `<article class="skin"><div class="sk-fundo"><img src="${M}skins/${prefixo}${id}.webp" alt="${n}" loading="lazy" draggable="false"></div><h3>${n}</h3><span>450 PP</span></article>`).join("");
+      // Cor via CSSOM (a CSP não permite atributo style= no HTML).
+      $$(".skin", st).forEach(k => k.style.setProperty("--cat", CORCAT[cat]));
       st.scrollLeft = 0;
       requestAnimationFrame(() => { const k = $$(".skin", st)[2]; st.scrollLeft = k ? Math.max(0, k.offsetLeft - st.clientWidth / 2 + k.clientWidth / 2) : 0; pede(); });
     }
@@ -440,7 +442,8 @@
   const COR = [["amarela", "Amarela", "#ffd15a"], ["azul", "Azul", "#3e8bff"], ["laranja", "Laranja", "#ff7a2f"], ["rosa", "Rosa", "#ff5db1"], ["roxo", "Roxa", "#9b5cff"], ["verde", "Verde", "#7dff4f"], ["vermelha", "Vermelha", "#ff4f4f"]];
   const al = $("#arsLinhas");
   if (al) {
-    al.innerHTML = COR.map(([a, n, c], i) => `<button class="linha-b ${i ? "" : "active"}" style="--c:${c}" data-c="${c}" type="button"><img src="${M}linhas/${a}.webp" alt="Linha ${n}" loading="lazy"><b>${n}</b></button>`).join("");
+    al.innerHTML = COR.map(([a, n, c], i) => `<button class="linha-b ${i ? "" : "active"}" data-c="${c}" type="button"><img src="${M}linhas/${a}.webp" alt="Linha ${n}" loading="lazy"><b>${n}</b></button>`).join("");
+    $$(".linha-b", al).forEach(b => b.style.setProperty("--c", b.dataset.c));
     $$(".linha-b", al).forEach(b => b.addEventListener("click", () => {
       $$(".linha-b", al).forEach(x => x.classList.remove("active")); b.classList.add("active");
       document.documentElement.style.setProperty("--linha", b.dataset.c);

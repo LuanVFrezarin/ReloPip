@@ -19,3 +19,5 @@
 .lg-foot{border-top:1px solid rgba(255,255,255,.1);padding:22px 0;background:#06070c;color:#8d95a6;font:500 15px Rajdhani,sans-serif}
 .lg-foot .lg-wrap{display:flex;flex-wrap:wrap;gap:8px 18px}
 .lg-foot a{color:#c6ccd8}
+.lg-acoes{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
+.lg-borda{border:1px solid rgba(255,255,255,.3)}

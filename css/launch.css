@@ -281,3 +281,8 @@ html{scroll-padding-top:96px}
 
 /* Loja PP: no celular estreito o link fica no menu (burger), não no topo. */
 @media (max-width:440px){.nav-actions .btn-ghost{display:none}}
+
+/* Antes eram style= inline (a CSP agora proíbe). */
+.svg-sprite{position:absolute}
+.foot-legal{display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:center;padding:18px 0 4px;font:600 15px Rajdhani,sans-serif}
+.foot-legal a{color:#c6ccd8}
