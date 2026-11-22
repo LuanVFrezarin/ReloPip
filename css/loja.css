@@ -30,7 +30,7 @@
 .lj-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:24px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
 .lj-card h2{font:700 24px Oswald,sans-serif;letter-spacing:.01em;margin-bottom:6px}
 .lj-muted{color:var(--muted)}
-.lj-fino{color:var(--faint);font-size:15px;margin-top:14px}
+.lj-fino{color:var(--muted);font-size:15px;margin-top:14px}
 .lj-fino a{color:var(--muted)}
 .lj-err{color:#ff8a9b;min-height:22px;margin-top:8px;font-weight:600}
 .lj-full{width:100%}
@@ -69,6 +69,7 @@
 .lj-preco{font:600 19px Rajdhani,sans-serif;color:#fff;margin-bottom:10px}
 .lj-pack .btn{margin-top:auto;width:100%;padding:11px 12px;font-size:14px}
 .lj-pack .btn:disabled{opacity:.6;cursor:wait}
+.lj-pack .btn:focus-visible,.lj-links a:focus-visible,.lj-sair:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 .lj-skel{background:linear-gradient(90deg,rgba(255,255,255,.04),rgba(255,255,255,.09),rgba(255,255,255,.04));background-size:200% 100%;animation:ljSk 1.2s linear infinite}
 @keyframes ljSk{to{background-position:-200% 0}}
 

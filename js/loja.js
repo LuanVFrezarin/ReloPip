@@ -58,7 +58,9 @@
     try {
       const u = new URL(String(url));
       const hosts = cfg.CHECKOUT_HOSTS || [];
-      return u.protocol === "https:" && hosts.includes(u.hostname) ? u.href : null;
+      if (u.protocol !== "https:" || u.port || u.username || u.password || !hosts.includes(u.hostname)) return null;
+      if (cfg.ENVIRONMENT === "production" && u.hostname.startsWith("sandbox.")) return null;
+      return u.href;
     } catch { return null; }
   }
 
@@ -191,6 +193,8 @@
   }
 
   async function sair() {
+    clearTimeout(consulta);
+    $("statusBox").hidden = true;
     await S.sair();
     pintarConta();
     toast("Você saiu.");
@@ -215,6 +219,7 @@
       card.append(el("div", "lj-preco", brl.format(Number(p.priceBrlCents || 0) / 100)));
       const b = el("button", "btn btn-primary", "Comprar");
       b.type = "button";
+      b.setAttribute("aria-label", `Comprar ${num.format(Number(p.pipointsAmount || p.pipoints || 0))} PP por ${brl.format(Number(p.priceBrlCents || 0) / 100)}`);
       b.addEventListener("click", () => comprar(p, b));
       card.append(b);
       box.append(card);
@@ -282,8 +287,8 @@
   function acompanharPedido(id) {
     if (!PEDIDO_RE.test(String(id || ""))) return;
     if (!S.autenticado) {
-      status("esperando", "Pagamento enviado ao Mercado Pago",
-        "Entre com a mesma conta para acompanhar. Os PP entram sozinhos assim que o Mercado Pago confirmar.");
+      status("esperando", "Acompanhe seu pedido",
+        "Entre com a mesma conta do RELO para consultar o pagamento.");
       return;
     }
     clearTimeout(consulta);
@@ -324,16 +329,9 @@
     const q = new URLSearchParams(location.search);
     if (![...q.keys()].length) return ler(CHAVE_PEDIDO);
     const ref = q.get("external_reference") || "";
-    const st = (q.get("status") || q.get("collection_status") || "").toLowerCase();
     history.replaceState(null, "", location.pathname + location.hash);
     const id = PEDIDO_RE.test(ref) ? ref : ler(CHAVE_PEDIDO);
     if (id) guardar(CHAVE_PEDIDO, id);
-    if (st === "failure" || st === "rejected" || st === "null") {
-      // Usuário voltou sem pagar: só informa; quem decide o estado é o backend.
-      status("falhou", "Pagamento não concluído", "Nada foi cobrado. Você pode tentar de novo quando quiser.");
-      guardar(CHAVE_PEDIDO, null);
-      return null;
-    }
     return id;
   }
 

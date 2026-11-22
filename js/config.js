@@ -105,7 +105,7 @@
     LOJAS: { appstore: "", googleplay: "", windows: "" },
     PAGAMENTO: { provider: "mercadopago", moeda: "BRL" },
     LINKS: {
-      whatsapp: "https://chat.whatsapp.com/Ls8HBv661sO7fnt6NtETIt?s=cl&p=i&mlu=1&amv=2",
+      whatsapp: "https://chat.whatsapp.com/Isr5O7axOfFK8gnoD2lplO?s=cl&p=i&iam=2",
       whatsapp_apoiadores: "https://chat.whatsapp.com/D0rBGDbubrSKToEU6dzrZl?s=cl&p=i&mlu=1&amv=2",
       pix: "39845365-60d9-4783-be50-a7fb9562d3a7"
     },
